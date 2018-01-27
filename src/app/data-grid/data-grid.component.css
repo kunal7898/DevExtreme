@@ -1,0 +1,13 @@
+dx-data-grid {
+    display: block;
+    height: 440px;
+    width: 100%;
+}
+
+.img-container {
+    height: 100px;
+}
+
+img {
+    height: 100px;
+}

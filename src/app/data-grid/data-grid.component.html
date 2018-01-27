@@ -1,0 +1,11 @@
+<div class="demo-container">
+  <dx-data-grid
+  [dataSource] = "employees"
+  [columns]= "columns">
+       <div *dxTemplate="let d = data of 'cellTemplate'">
+           <div class="img-container">
+               <img [src]="d.value"/>
+           </div>
+       </div>
+   </dx-data-grid>
+</div>
