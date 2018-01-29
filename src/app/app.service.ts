@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 export class Employe {
   ID: number;
   FirstName: string;
@@ -12,13 +11,10 @@ export class Employe {
   HireDate: string;
   Notes: string;
   Address: string;
-
- 
 }
-
 let EMPLOYEES: Employe[] = [{
   ID: 1,
-  FirstName: 'kunal',
+  FirstName: 'John',
   LastName: 'Heart',
   Prefix: 'Mr.',
   Position: 'CEO',
@@ -117,15 +113,11 @@ let EMPLOYEES: Employe[] = [{
   Address: '12100 Mora Dr'
 }];
 
-@Injectable()
-export class DataGridService {
-  getEmployees(): Employe[] {
-    return EMPLOYEES;
 
-}
-getColumns(){
-  let columns = new Array<object>();
-  columns.push({code: 'ID', AttributeType:'number'},{code:'FirstName',AttributeType:'string'},{code:'LastName',AttributeType:'string'},{code:'Position',AttributeType:'string'},{code:'BirthDate',AttributeType:'string'});
-  return columns;
+@Injectable()
+export class AppService {
+ public getEmployees(): Employe[] {
+    return EMPLOYEES;
+ 
 }
 }

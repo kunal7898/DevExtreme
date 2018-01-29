@@ -11,37 +11,14 @@ import {DevExtremeModule} from 'devextreme-angular';
 })
 export class DataGridComponent  {
   employees: Employe[];
-
-  columns: any[] = [{
- 
-    width: 100,
-    allowFiltering: false,
-    allowSorting: false,
-    cellTemplate: 'cellTemplate'
-}, {
-    dataField: 'Prefix',
-    caption: 'Title',
-    width: 70
-},
-'FirstName',
-'LastName',
-{
-    dataField: 'Position',
-    caption: 'Position'
-}, {
-    dataField: 'BirthDate',
-    caption: 'BirthDate',
-    dataType: 'date'
-}, {
-    dataField: 'HireDate',
-    dataType: 'date'
-}];
+  
+  columns=[];
   constructor(private Datagridservice:DataGridService) { 
     this.employees = Datagridservice.getEmployees();
-    let get = new GridColumns();
-     get.getColumns();
+    this.columns=GridColumns.getColumns();
+    }
+
     
-  }
 
  
  

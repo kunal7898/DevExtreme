@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "devextreme-components"
+    "name": "dev-extreme-controls"
   },
   "apps": [
     {
@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "../node_modules/devextreme/dist/css/dx.common.css", 
+        "../node_modules/devextreme/dist/css/dx.light.css" 
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

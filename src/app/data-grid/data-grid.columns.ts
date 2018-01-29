@@ -6,28 +6,28 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class GridColumns{
 
 EMPLOYEES: Employe[];
-_Width: number;
-_allowFiltering:boolean;
-_allowSorting:boolean;
-_cellTemplate:string;
-_dataField:string;
-_caption:string;
+width: number;
+allowFiltering:boolean;
+allowSorting:boolean;
+cellTemplate:string;
+dataField:string;
+caption:string;
 
 constructor(){
     
 }
-   getColumns(){
+  public static getColumns(){
     
    let columns = new Array<object>();
    let obj = new DataGridService();
    
    obj.getColumns().forEach((eachObj) => {
        
-        if (typeof eachObj=='number'){
-        columns.push({_Width :20, _allowFiltering:true,_allowSorting:true,_dataField:eachObj,_cellTemplate:'none'})
+        if (eachObj["AttributeType"]=='number'){
+        columns.push({width :20, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
     }
-        if (typeof eachObj=='string'){
-        columns.push({_Width :50, _allowFiltering:true,_allowSorting:true,_dataField:eachObj,_cellTemplate:'none'})
+        if (eachObj["AttributeType"]=='string'){
+        columns.push({width :50, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
     }
    })
 

@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('devextreme-components App', () => {
+describe('dev-extreme-controls App', () => {
   let page: AppPage;
 
   beforeEach(() => {
