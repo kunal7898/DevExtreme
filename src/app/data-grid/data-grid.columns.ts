@@ -30,7 +30,7 @@ constructor(){
         columns.push({width :50, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
     }
    })
-   console.log("hii");
+   console.log("hello");
    return columns;
 
    }
