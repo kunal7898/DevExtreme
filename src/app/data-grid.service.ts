@@ -12,6 +12,8 @@ export class Employe {
   HireDate: string;
   Notes: string;
   Address: string;
+
+ 
 }
 
 let EMPLOYEES: Employe[] = [{
@@ -120,4 +122,10 @@ export class DataGridService {
   getEmployees(): Employe[] {
     return EMPLOYEES;
 
-}}
+}
+getColumns(){
+  let columns = new Array<object>();
+  columns.push({ID:'number'},{FirstName:'string'},{LastName:'string'},{Position:'string'},{BirthDate:'string'});
+  return columns;
+}
+}

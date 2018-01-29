@@ -1,3 +1,4 @@
+import { GridColumns } from './data-grid.columns';
 import { Employe, DataGridService } from './../data-grid.service';
 import { Component, OnInit } from '@angular/core';
 import {DevExtremeModule} from 'devextreme-angular';
@@ -37,6 +38,9 @@ export class DataGridComponent  {
 }];
   constructor(private Datagridservice:DataGridService) { 
     this.employees = Datagridservice.getEmployees();
+    let get = new GridColumns();
+     get.getColumns();
+    
   }
 
  
