@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>code</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Birthdate</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let emp of employees">
+    <td>{{ emp.Code }}</td>
+    <td>{{ emp.Name }}</td>
+    <td>{{ emp.Gender }}</td>
+    <td>{{ emp.BirthDate }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- <button (click)="getEmployees()">get data</button> -->
+
+

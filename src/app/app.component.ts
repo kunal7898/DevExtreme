@@ -1,3 +1,4 @@
+import { GenralControlComponent } from './genral-control/genral-control.component';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { Component } from '@angular/core';
 

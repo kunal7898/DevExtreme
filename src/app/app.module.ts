@@ -7,21 +7,22 @@ import { DataGridComponent } from './data-grid/data-grid.component';
 import { DevExtremeModule } from 'devextreme-angular';
 import { AppService } from './app.service';
 import { DataGridService } from './data-grid.service';
+import { GenralControlComponent } from './genral-control/genral-control.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataGridComponent
+    DataGridComponent,
+    GenralControlComponent
   ],
   imports: [
     BrowserModule,
     DevExtremeModule,
-    RouterModule.forRoot([
-      {
-        path:'DataGrid',
-        component : DataGridComponent,
-     }
+     RouterModule.forRoot([
+      { path:'DataGrid', component : DataGridComponent},
+      {path:'GenralControl',component:GenralControlComponent}
     ])
   ],
   providers: [DataGridService,AppService],
