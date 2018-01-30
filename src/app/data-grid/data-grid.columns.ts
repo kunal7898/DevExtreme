@@ -24,13 +24,26 @@ constructor(){
    obj.getColumns().forEach((eachObj) => {
        
         if (eachObj["AttributeType"]=='number'){
-        columns.push({width :20, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+        columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
     }
         if (eachObj["AttributeType"]=='string'){
-        columns.push({width :50, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+        columns.push({width :100, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+    }
+    if (eachObj["AttributeType"]=='date'){
+        columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],dataType:'date'})
+    }
+
+    if(eachObj["AttributeType"]=='Lookup'){
+        let tempData = JSON.parse(localStorage.getItem(eachObj["PicklistMasterId"]));  
+        columns.push({width :100, allowFiltering:true,allowSorting:true, lookup: {
+            dataSource:tempData,
+            valueExpr: "ID",
+            displayExpr: "Name"
+        },dataField:eachObj["code"],caption:eachObj["code"]});
+        
     }
    })
-   console.log("hello");
+
    return columns;
 
    }
