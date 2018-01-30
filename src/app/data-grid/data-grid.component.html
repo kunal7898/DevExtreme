@@ -2,10 +2,16 @@
 
 <dx-data-grid
    [dataSource] = "employees"
-   [columns]= "columns">
+   [columns]= "columns"
+   [allowColumnReordering]= "allowColumnReordering"
+   [showBorders]= "showBorders"
+   [showRowLines]= "showRowLines"
+   [width]= "width"
+   [height]= "height"
+   [editing]= "editing"
+   >
+   
         <div *dxTemplate="let d = data of 'cellTemplate'">
-            <div class="img-container">
-                <img [src]="d.value"/>
-            </div>
+            
         </div>
     </dx-data-grid>
