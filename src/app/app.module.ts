@@ -8,6 +8,7 @@ import { DevExtremeModule } from 'devextreme-angular';
 import { AppService } from './app.service';
 import { DataGridService } from './data-grid.service';
 import { GenralControlComponent } from './genral-control/genral-control.component';
+import { PopupsComponent } from './popups/popups.component';
 
 
 
@@ -15,14 +16,16 @@ import { GenralControlComponent } from './genral-control/genral-control.componen
   declarations: [
     AppComponent,
     DataGridComponent,
-    GenralControlComponent
+    GenralControlComponent,
+    PopupsComponent
   ],
   imports: [
     BrowserModule,
     DevExtremeModule,
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
-      {path:'GenralControl',component:GenralControlComponent}
+      {path:'GenralControl',component:GenralControlComponent},
+      {path:'Popup',component:PopupsComponent}
     ])
   ],
   providers: [DataGridService,AppService],

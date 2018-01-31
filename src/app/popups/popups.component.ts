@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./popups.component.css']
 })
 export class PopupsComponent implements OnInit {
+  popupVisible : boolean;
 
   constructor() { }
 
   ngOnInit() {
   }
+  showInfo(employee) {
+    this.popupVisible = true;
+}
 
 }

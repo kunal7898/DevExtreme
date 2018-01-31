@@ -1,3 +1,20 @@
-<p>
-  popups works!
-</p>
+<dx-button
+class="button-info"
+text="Details"
+(onClick)="showInfo(employee)">
+</dx-button>
+
+
+<dx-popup
+class="popup"
+[width]="300"
+[height]="250"
+[showTitle]="true"
+title="Information"
+[dragEnabled]="false"
+[closeOnOutsideClick]="true"
+[(visible)]="popupVisible">
+<div *dxTemplate="let data of 'content'">
+  <p>hello</p>
+</div>
+</dx-popup>
