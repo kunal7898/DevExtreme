@@ -1,3 +1,6 @@
+import { PopupDirective } from './popup-directive';
+import { PopupViewResolver } from './popup-viewresolver';
+import { PopupsComponent } from './popups/popups.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -15,17 +18,23 @@ import { GenralControlComponent } from './genral-control/genral-control.componen
   declarations: [
     AppComponent,
     DataGridComponent,
-    GenralControlComponent
+    GenralControlComponent,
+    PopupsComponent,
+    PopupViewResolver,
+    PopupDirective,
   ],
   imports: [
     BrowserModule,
     DevExtremeModule,
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
-      {path:'GenralControl',component:GenralControlComponent}
+      {path:'GenralControl',component:GenralControlComponent},
+      {path:'Popup',component:PopupsComponent}
+      
     ])
   ],
   providers: [DataGridService,AppService],
+  entryComponents: [PopupsComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
