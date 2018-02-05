@@ -5,16 +5,17 @@ text="Details"
 </dx-button>
 
 
-<dx-popup
+<dx-popup id="popup"
 class="popup"
-[width]="300"
-[height]="250"
-[showTitle]="true"
-title="Information"
-[dragEnabled]="false"
-[closeOnOutsideClick]="true"
-[(visible)]="popupVisible">
-<div *dxTemplate="let data of 'content'">
-  <p>hello</p>
+[(width)]="width"
+[(height)]="height"
+[(showTitle)]="showTitle"
+[(title)]="data.Body"
+[(dragEnabled)]="dragEnabled"
+[(closeOnOutsideClick)]="closeOnOutsideClick"
+[(visible)]="popupVisible"
+>
+<div >
+  {{data.Title}}
 </div>
 </dx-popup>

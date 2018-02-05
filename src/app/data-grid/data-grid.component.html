@@ -1,4 +1,6 @@
-
+<div>
+    <app-popup [ads]="ads"></app-popup>
+  </div>
 
 <dx-data-grid
    [dataSource] = "employees"
@@ -9,6 +11,7 @@
    [width]= "width"
    [height]= "height"
    [editing]= "editing"
+   (onRowClick)="onRowClick($event)"
    >
    
         <div *dxTemplate="let d = data of 'cellTemplate'">

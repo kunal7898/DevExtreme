@@ -9,6 +9,8 @@ import { AppService } from './app.service';
 import { DataGridService } from './data-grid.service';
 import { GenralControlComponent } from './genral-control/genral-control.component';
 import { PopupsComponent } from './popups/popups.component';
+import { PopupViewResolver } from './PopupViewResolver';
+import { PopupDirective } from './popup-directive';
 
 
 
@@ -17,7 +19,9 @@ import { PopupsComponent } from './popups/popups.component';
     AppComponent,
     DataGridComponent,
     GenralControlComponent,
-    PopupsComponent
+    PopupsComponent,
+    PopupViewResolver,
+    PopupDirective,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,7 @@ import { PopupsComponent } from './popups/popups.component';
     ])
   ],
   providers: [DataGridService,AppService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[PopupsComponent]
 })
 export class AppModule { }
