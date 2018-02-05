@@ -1,3 +1,6 @@
+import { PopupDirective } from './popup-directive';
+import { PopupViewResolver } from './popup-viewresolver';
+import { PopupsComponent } from './popups/popups.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -30,10 +33,19 @@ import { PopupDirective } from './popup-directive';
       { path:'DataGrid', component : DataGridComponent},
       {path:'GenralControl',component:GenralControlComponent},
       {path:'Popup',component:PopupsComponent}
+<<<<<<< HEAD
     ])
   ],
   providers: [DataGridService,AppService],
   bootstrap: [AppComponent],
   entryComponents:[PopupsComponent]
+=======
+      
+    ])
+  ],
+  providers: [DataGridService,AppService],
+  entryComponents: [PopupsComponent ],
+  bootstrap: [AppComponent]
+>>>>>>> d4439c689d640534b443b2b992f38844d9605284
 })
 export class AppModule { }
