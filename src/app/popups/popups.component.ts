@@ -2,9 +2,6 @@
 import { Input,ComponentFactoryResolver } from '@angular/core';
 import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 
-
-
-
 @Component({
   selector: 'app-popups',
   templateUrl: './popups.component.html',
