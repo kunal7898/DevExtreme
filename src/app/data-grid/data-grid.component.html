@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-<div>
-    <app-popup [ads]="ads"></app-popup>
-  </div>
-=======
+{{values}}
+<app-popups >
 
- <div>
-    <app-popup [ads]="ads"></app-popup>
-  </div>
 
->>>>>>> d4439c689d640534b443b2b992f38844d9605284
-
+</app-popups>
 <dx-data-grid
    [dataSource] = "employees"
    [columns]= "columns"
@@ -18,7 +11,7 @@
    [showRowLines]= "showRowLines"
    [width]= "width"
    [height]= "height"
-   [editing]= "editing"
+   [(editing)]= "editing"
    (onRowClick)="onRowClick($event)"
    >
    

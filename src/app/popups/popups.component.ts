@@ -1,63 +1,54 @@
-import { PopupDirective } from './../popup-directive';
+
 import { Input,ComponentFactoryResolver } from '@angular/core';
 import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
-<<<<<<< HEAD
-import { PopupInterface } from './PopupInterface';
-import { PopupHelper } from './popup-addhelper';
 
 
-=======
-import { PopupInterface } from './popup-interface';
-import { PopupHelper } from './popup-addhelper';
->>>>>>> d4439c689d640534b443b2b992f38844d9605284
+
 
 @Component({
   selector: 'app-popups',
   templateUrl: './popups.component.html',
-  styleUrls: ['./popups.component.css']
+  styleUrls: ['./popups.component.css'],
 })
-<<<<<<< HEAD
-export class PopupsComponent implements OnInit,PopupInterface {
-  @Input() data: any;
-  IsVisible:true;
+export class PopupsComponent implements OnInit{
+  values:boolean;
   width:number;
   height:number;
   showTitle:boolean;
   title:string;
   dragEnabled:boolean;
   closeOnOutsideClick:boolean;
-   popupVisible : boolean;
-=======
-export class PopupsComponent implements OnInit ,PopupInterface {
->>>>>>> d4439c689d640534b443b2b992f38844d9605284
+  popupVisible : boolean;
 
-  @Input() data: any;
-  constructor() { }
+  //dx form 
+  formData:{};
+  items :any[];
 
- 
-  ngOnInit() {
+
+  constructor() { 
+
   }
 
-<<<<<<< HEAD
+  public setPopupConfirguration( Width:number, Height:number, ShowTitle :boolean, Title : string,  DragEnabled : boolean, CloseOnOutsideClick:boolean){
+    this.width=Width;
+    this.height=Height;
+    this.showTitle=ShowTitle;
+    this.title=Title;
+    this.dragEnabled=DragEnabled;
+    this.closeOnOutsideClick=CloseOnOutsideClick;
+  } 
+  ngOnInit() {
+    this.popupVisible=false;
+  }
 
 
-  public  setPopupConfiguration(title){
-    this.width=300;
-    this.height=200;
-    this.showTitle=true;
-    this.title=title;
-    this.dragEnabled=true;
-    this.closeOnOutsideClick=true;
+public setPopupFormData( PopupFormData:{},Items:any[]){
+  this.formData=PopupFormData;
+  this.items=Items;
 }
 
+public setPopUpVisible(value:boolean){
+   this.popupVisible=true;
+ }
 
-public showInfo() {
-    this.setPopupConfiguration("hello");
-    this.popupVisible=true;
-}
-
-
-=======
-  
->>>>>>> d4439c689d640534b443b2b992f38844d9605284
 }
