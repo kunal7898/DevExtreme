@@ -1,12 +1,14 @@
 import { GridColumns } from './data-grid.columns';
 import { Employe, DataGridService } from './../data-grid.service';
-import { Component, OnInit,Input,EventEmitter } from '@angular/core';
+import { Component, Output,OnInit,Input,EventEmitter,ViewChild,ViewContainerRef,ComponentFactoryResolver } from '@angular/core';
 import {DevExtremeModule} from 'devextreme-angular';
 import { DataSourceService } from '../data-source.service';
 import { PopupsComponent } from '../popups/popups.component';
 import { Window } from 'selenium-webdriver';
 import { PopupHelper } from '../popups/popup-addhelper';
 import { PopupDirective } from '../popup-directive';
+
+
 
 
 
@@ -21,6 +23,8 @@ import { PopupDirective } from '../popup-directive';
 })
 export class DataGridComponent implements OnInit  {
   employees: Employe[];
+  @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
+  @Output() visible  = new EventEmitter();
 
   ads: PopupHelper[];
   PopUpwidth:number;
@@ -138,7 +142,7 @@ export class DataGridComponent implements OnInit  {
 };
   columns=[];
 
-  constructor(private Datagridservice:DataGridService) { 
+  constructor(private Datagridservice:DataGridService,private _cfr: ComponentFactoryResolver) { 
     DataSourceService.loadDataSource();
     this.employees = Datagridservice.getEmployees();
     this.columns=GridColumns.getColumns();
@@ -146,21 +150,16 @@ export class DataGridComponent implements OnInit  {
 
   }
    
-
-
-    ngOnInit() {
-        let PopupObject = new PopupsComponent();
-        PopupObject.setPopupConfirguration(400,400,true,"Form Data",true,true)
-        PopupObject.setPopupFormData(this.formData,this.items);
-        PopupObject.setPopUpVisible(true);
+  ngOnInit() {
+      
     }
     
     onRowClick(e){
-    let PopupObject = new PopupsComponent();
-    PopupObject.setPopupConfirguration(400,400,true,"Form Data",true,true)
-    PopupObject.setPopupFormData(this.formData,this.items);
-    PopupObject.setPopUpVisible(true);
-
-}
+       
+       this.popComponent.setPopupConfirguration(500,500,true,"hello",true,true);
+       this.popComponent.setPopupFormData(this.formData,this.items);
+       this.popComponent.popupVisible=true;
+    
+   }
    
   }

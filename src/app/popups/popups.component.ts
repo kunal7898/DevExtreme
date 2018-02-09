@@ -2,13 +2,16 @@
 import { Input,ComponentFactoryResolver } from '@angular/core';
 import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 
+
+
+
 @Component({
   selector: 'app-popups',
   templateUrl: './popups.component.html',
   styleUrls: ['./popups.component.css'],
 })
-export class PopupsComponent implements OnInit{
-  values:boolean;
+export class PopupsComponent {
+  _ref:any;  
   width:number;
   height:number;
   showTitle:boolean;
@@ -16,7 +19,7 @@ export class PopupsComponent implements OnInit{
   dragEnabled:boolean;
   closeOnOutsideClick:boolean;
   popupVisible : boolean;
-
+  valueemitted:string ='hello';
   //dx form 
   formData:{};
   items :any[];
@@ -34,14 +37,18 @@ export class PopupsComponent implements OnInit{
     this.dragEnabled=DragEnabled;
     this.closeOnOutsideClick=CloseOnOutsideClick;
   } 
-  ngOnInit() {
-    this.popupVisible=false;
-  }
+
 
 
 public setPopupFormData( PopupFormData:{},Items:any[]){
   this.formData=PopupFormData;
   this.items=Items;
+}
+
+setEvent(Value:boolean):void{
+  this.popupVisible=Value;
+  console.log("hello");
+  
 }
 
 public setPopUpVisible(value:boolean){

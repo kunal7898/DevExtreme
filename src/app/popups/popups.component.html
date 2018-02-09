@@ -1,6 +1,5 @@
 
-
-<dx-popup id="popup"
+<dx-popup id="popup" 
 class="popup"
 [(width)]="PopUpwidth"
 [(height)]="PopUpheight"
@@ -8,7 +7,8 @@ class="popup"
 title="hello"
 [(dragEnabled)]="dragEnabled"
 [(closeOnOutsideClick)]="closeOnOutsideClick"
-(visible)="values=$event"
+[(visible)]="popupVisible"
+
 >
 <div *dxTemplate="let data of 'content'">
 <dx-form [(formData)]="formData" 
