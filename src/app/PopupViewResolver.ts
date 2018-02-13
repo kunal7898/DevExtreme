@@ -1,48 +1,41 @@
-import { Component, Input, AfterViewInit, ViewChild, ComponentFactoryResolver, OnDestroy } from '@angular/core';
-
-import { PopupDirective } from './popup-directive';
-import { PopupHelper }      from './popups/popup-addhelper';
-import { PopupInterface } from './popups/PopupInterface';
-
-@Component({
-  selector: 'app-popup',
-  template: `
-              <div class="ad-banner">
-                <ng-template popup-host></ng-template>
-              </div>
-            `
-})
-export class PopupViewResolver implements AfterViewInit, OnDestroy {
-  @Input() ads: PopupHelper[];
-  currentAddIndex: number = -1;
-  @ViewChild(PopupDirective) adHost: PopupDirective;
-  subscription: any;
-  interval: any;
-
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
-
-  ngAfterViewInit() {
-    this.loadComponent();
-  
-    
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.interval);
-  }
-
-  loadComponent() {
-    this.currentAddIndex = (this.currentAddIndex + 1) % this.ads.length;
-    let adItem = this.ads[this.currentAddIndex];
-
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(adItem.component);
-
-    let viewContainerRef = this.adHost.viewContainerRef;
-    viewContainerRef.clear();
-
-    let componentRef = viewContainerRef.createComponent(componentFactory);
-    (<PopupInterface>componentRef.instance).data = adItem.data;
-  }
+export class PopupViewResolver {
 
 
+  public getData():any{
+    //Service For getting the Data
+  let Values ={
+    "ID": 1,
+    "FirstName": "John",
+    "LastName": "Heart",
+    "Position": "CEO",
+    "BirthDate": "1964/03/16",
+    "HireDate": "1995/01/15",
+    "Notes": "John has been in the Audio/Video industry since 1990. He has led DevAV as its CEO since 2003.\r\nWhen not working hard as the CEO, John loves to golf and bowl. He once bowled a perfect game of 300.",
+    "Address": "351 S Hill St.",
+    "City": "Los Angeles",
+    "State": "CA",
+    "ZipCode": "90013",
+    "Home": "555-684-1334",
+    "Mobile": "555-684-1335",
+    "Email": "jheart@dx-email.com",
+    "Skype": "jheart_DX_skype",
 }
+  return Values;
+ }
+
+
+
+ 
+ public LoadMetaData():Array<object>{
+   let Values =  new Array<object>();
+   Values.push({code:'ID',Name:'ID',AttributeType:'number',PicklistId:null,IsMandatory:true},
+   {code:'FirstName',Name:'First Name',AttributeType:'string',PicklistId:null,IsMandatory:true},
+   {code:'LastName',Name:'Last Name',AttributeType:'string',PicklistId:null,IsMandatory:true},
+   {code:'Position',Name:'Position',AttributeType:'lookup',PicklistId:2,IsMandatory:true},
+   {code:'BirthDate',Name:'Date Of birth',AttributeType:'Date',PicklistId:null,IsMandatory:true},
+   {code:'HireDate',Name:'Hire Date',AttributeType:'Date',PicklistId:null,IsMandatory:true},
+   {code:'Address',Name:'Address',AttributeType:'string',PicklistId:null,IsMandatory:true}
+ )
+   return Values;
+ }
+ }

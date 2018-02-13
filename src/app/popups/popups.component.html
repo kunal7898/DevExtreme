@@ -4,7 +4,7 @@ class="popup"
 [(width)]="PopUpwidth"
 [(height)]="PopUpheight"
 [(showTitle)]="showTitle"
-title="hello"
+[(title)]="title"
 [(dragEnabled)]="dragEnabled"
 [(closeOnOutsideClick)]="closeOnOutsideClick"
 [(visible)]="popupVisible"
@@ -12,6 +12,14 @@ title="hello"
 >
 <div *dxTemplate="let data of 'content'">
 <dx-form [(formData)]="formData" 
-[(items)]="items"></dx-form>
+[(items)]="items" 
+></dx-form>
+
+<dx-button
+text="Save"
+[type]="ButtonType"
+>
+</dx-button>
+
 </div>
 </dx-popup>

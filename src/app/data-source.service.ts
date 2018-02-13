@@ -24,6 +24,32 @@ export class DataSourceService {
     "ID": 5,
     "Name": "California"
     }]));
+    localStorage.setItem('2', JSON.stringify( [ 
+      {
+        "ID": 1,
+        "Name":"HR Manager",
+      },
+      {
+        "ID": 2,
+        "Name":"IT Manager",
+      },
+      {
+        "ID": 3,
+        "Name":"IT Manager",
+      },
+      {
+        "ID": 4,
+        "Name":"Controller",
+      },
+      {
+        "ID": 5,
+        "Name":"Sales Manager",
+      },
+      {
+        "ID": 6,
+        "Name":"Support Manager",
+      },
+    ]));
   }
 
 }

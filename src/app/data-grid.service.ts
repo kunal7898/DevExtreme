@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 
+
 export class Employe {
   ID: number;
   FirstName: string;
@@ -137,4 +138,5 @@ getColumns(){
   columns.push({code: 'ID', AttributeType:'number'},{code:'FirstName',AttributeType:'string'},{code:'LastName',AttributeType:'string'},{code:'Position',AttributeType:'string'},{code:'BirthDate',AttributeType:'date'},{code:'state',AttributeType:'Lookup',PicklistMasterId:1});
   return columns;
 }
+
 }

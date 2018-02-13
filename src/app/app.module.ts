@@ -9,8 +9,8 @@ import { AppService } from './app.service';
 import { DataGridService } from './data-grid.service';
 import { GenralControlComponent } from './genral-control/genral-control.component';
 import { PopupsComponent } from './popups/popups.component';
-import { PopupViewResolver } from './PopupViewResolver';
 import { PopupDirective } from './popup-directive';
+import { TabComponent } from './tab/tab.component';
 
 
 
@@ -20,8 +20,8 @@ import { PopupDirective } from './popup-directive';
     DataGridComponent,
     GenralControlComponent,
     PopupsComponent,
-    PopupViewResolver,
     PopupDirective,
+    TabComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,10 +29,13 @@ import { PopupDirective } from './popup-directive';
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
       {path:'GenralControl',component:GenralControlComponent},
-      {path:'Popup',component:PopupsComponent}
+      {path:'Popup',component:PopupsComponent},
+      {path:'Tabs',component:TabComponent}
     ])
   ],
   providers: [DataGridService,AppService],
   bootstrap: [AppComponent],
 })
+
+
 export class AppModule { }
