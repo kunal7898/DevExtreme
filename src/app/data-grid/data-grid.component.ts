@@ -63,7 +63,7 @@ export class DataGridComponent implements OnInit  {
     
     onRowClick(e){
        this.popComponent.setPopupConfirguration(500,500,true,"Info",true,true);
-       this.popComponent.setPopupFormData(e.data);
+       this.popComponent.setPopupFormData(e.data,true,null);
        this.popComponent.popupVisible=true;
     
    }

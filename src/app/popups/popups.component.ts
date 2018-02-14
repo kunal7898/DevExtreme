@@ -1,7 +1,9 @@
 
-import { Input,ComponentFactoryResolver } from '@angular/core';
+import { Input,ComponentFactoryResolver ,Output,EventEmitter} from '@angular/core';
 import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 import { PopupViewResolver } from '../PopupViewResolver';
+import { TabComponent } from '../tab/tab.component';
+
 
 
 
@@ -14,27 +16,25 @@ import { PopupViewResolver } from '../PopupViewResolver';
 })
 export class PopupsComponent {
   _ref:any;  
+  formdatas: EventEmitter<any> = new EventEmitter();
   PopUpwidth:number;
   PopUpheight:number;
   showTitle:boolean;
   title:string;
+  IsDataGrid:boolean=false;
   dragEnabled:boolean;
   closeOnOutsideClick:boolean;
   popupVisible : boolean;
   valueemitted:string ='hello';
+  tabserice:any;
   //dx form 
   formData:{};
   items :any[];
-  buttonOptions = {
-    text: "Register",
-    type: "success",
-    useSubmitBehavior: true,
-    validationGroup: "customerData"
-};
+
 ButtonType:string;
 
   constructor() { 
-
+   
   }
 
   public setPopupConfirguration( Width:number, Height:number, ShowTitle :boolean, Title : string,  DragEnabled : boolean, CloseOnOutsideClick:boolean){
@@ -48,11 +48,18 @@ ButtonType:string;
 
 
 
-public setPopupFormData(Data){
+public setPopupFormData(Data,IsDataGrid,items){
   let viewresolver = new PopupViewResolver();
   this.formData=Data;
-  this.items=this.LoadItems();
-  this.ButtonType="success";
+  this.IsDataGrid=IsDataGrid;
+  if(IsDataGrid){
+    this.items=this.LoadItems();
+    this.ButtonType="success";
+  }
+  else{
+    this.items=items;
+    this.ButtonType="success";
+  }
 }
 
 
@@ -94,6 +101,16 @@ public getEditorType(Attributetype):any{
 
 }
 
+public AddTab(event){
+  
+if(!this.IsDataGrid){
+  this.formdatas.emit(this.formData);
+   return this.formData;
+  //let tabobj = new TabComponent();
+  //this.TabComponent.Settabs(this.formData);
+
+}
+}
 public getEditorOptions(Type,PicklistId):any{
   if(Type=="dxSelectBox")
     return  {

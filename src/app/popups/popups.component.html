@@ -11,12 +11,13 @@ class="popup"
 
 >
 <div *dxTemplate="let data of 'content'">
-<dx-form [(formData)]="formData" 
+<dx-form id="formdata" [(formData)]="formData" 
 [(items)]="items" 
 ></dx-form>
 
 <dx-button
 text="Save"
+(onClick)="AddTab($event)"
 [type]="ButtonType"
 >
 </dx-button>

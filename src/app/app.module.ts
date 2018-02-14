@@ -11,6 +11,7 @@ import { GenralControlComponent } from './genral-control/genral-control.componen
 import { PopupsComponent } from './popups/popups.component';
 import { PopupDirective } from './popup-directive';
 import { TabComponent } from './tab/tab.component';
+import {  TabServices } from './tab.service';
 
 
 
@@ -33,7 +34,7 @@ import { TabComponent } from './tab/tab.component';
       {path:'Tabs',component:TabComponent}
     ])
   ],
-  providers: [DataGridService,AppService],
+  providers: [DataGridService,AppService,TabServices],
   bootstrap: [AppComponent],
 })
 

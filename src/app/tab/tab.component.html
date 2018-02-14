@@ -1,3 +1,38 @@
-<p>
-  tab works!
-</p>
+<app-popups >
+ 
+</app-popups>
+
+<dx-button
+text="Add New"
+[type]="ButtonType"
+(onClick)="AddTab($event)"
+>
+</dx-button>
+<br>
+<div id="tabs">
+  <dx-tabs
+      [dataSource]="tabs"
+      [selectedIndex]="0"
+      (onItemClick)="selectTab($event)"
+  ></dx-tabs>
+  {{tabContent}}
+<div *ngIf="TabPanelshow">
+  <dx-tab-panel
+    
+  [height]="260"
+  [dataSource]="tabs"
+  [selectedIndex]="0"
+  [loop]="false"
+  [animationEnabled]="true"
+  [swipeEnabled]="true"
+>
+
+<div *dxTemplate="let Tab of 'title'">
+  <span>{{Tab.text}}</span>
+</div>
+</dx-tab-panel>
+</div>
+  
+</div>
+
+
