@@ -5,10 +5,6 @@ import { PopupViewResolver } from '../PopupViewResolver';
 import { TabComponent } from '../tab/tab.component';
 
 
-
-
-
-
 @Component({
   selector: 'app-popups',
   templateUrl: './popups.component.html',
@@ -16,7 +12,8 @@ import { TabComponent } from '../tab/tab.component';
 })
 export class PopupsComponent {
   _ref:any;  
-  formdatas: EventEmitter<any> = new EventEmitter();
+  validationGroup:string ="validationGroup" 
+  @Output() formdatas: EventEmitter<any> = new EventEmitter();
   PopUpwidth:number;
   PopUpheight:number;
   showTitle:boolean;
@@ -102,15 +99,13 @@ public getEditorType(Attributetype):any{
 }
 
 public AddTab(event){
-  
-if(!this.IsDataGrid){
+  if(!this.IsDataGrid)
   this.formdatas.emit(this.formData);
-   return this.formData;
-  //let tabobj = new TabComponent();
-  //this.TabComponent.Settabs(this.formData);
+}
 
-}
-}
+
+
+
 public getEditorOptions(Type,PicklistId):any{
   if(Type=="dxSelectBox")
     return  {

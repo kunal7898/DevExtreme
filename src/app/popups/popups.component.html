@@ -12,13 +12,16 @@ class="popup"
 >
 <div *dxTemplate="let data of 'content'">
 <dx-form id="formdata" [(formData)]="formData" 
-[(items)]="items" 
+[(items)]="items"
+validationGroup="dxvalidationGroup"
 ></dx-form>
 
 <dx-button
 text="Save"
 (onClick)="AddTab($event)"
 [type]="ButtonType"
+validationGroup="dxvalidationGroup"
+[useSubmitBehavior]="true"
 >
 </dx-button>
 

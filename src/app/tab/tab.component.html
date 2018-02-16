@@ -1,7 +1,6 @@
-<app-popups >
+<app-popups (formdatas)="formdatas($event)">
  
 </app-popups>
-
 <dx-button
 text="Add New"
 [type]="ButtonType"
@@ -15,6 +14,10 @@ text="Add New"
       [selectedIndex]="0"
       (onItemClick)="selectTab($event)"
   ></dx-tabs>
+
+<app-data-grid *ngIf="DataGridshow">
+  
+</app-data-grid>
   {{tabContent}}
 <div *ngIf="TabPanelshow">
   <dx-tab-panel
@@ -25,11 +28,19 @@ text="Add New"
   [loop]="false"
   [animationEnabled]="true"
   [swipeEnabled]="true"
+  (onSelectionChanged)="OnTabPanelSelectionChanged($event)"
 >
 
 <div *dxTemplate="let Tab of 'title'">
   <span>{{Tab.text}}</span>
 </div>
+<div *dxTemplate="let Tab of 'item'">
+  <div>
+      <app-text-area>
+
+      </app-text-area>
+  </div>
+  </div>
 </dx-tab-panel>
 </div>
   

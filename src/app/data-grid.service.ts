@@ -19,7 +19,7 @@ export class Employe {
 
 let EMPLOYEES: Employe[] = [{
   ID: 1,
-  FirstName: 'kunal',
+  FirstName: '',
   LastName: 'Heart',
   Prefix: 'Mr.',
   Position: 'CEO',

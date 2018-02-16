@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import {  Tab, TabServices } from '../tab.service';
 import { PopupsComponent } from '../popups/popups.component';
+import { TextAreaComponent } from '../text-area/text-area.component';
 
 
 @Component({
@@ -11,7 +12,9 @@ import { PopupsComponent } from '../popups/popups.component';
 })
 export class TabComponent implements OnInit {
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
+  @ViewChild(TextAreaComponent) private TextAreaCompnoent :TextAreaComponent;
   TabPanelshow:boolean=false;
+  DataGridshow:boolean=false;
   public tabs: Tab[];
   tabContent:any;
   constructor(TabService?:TabServices) {
@@ -31,9 +34,18 @@ export class TabComponent implements OnInit {
       this.TabPanelshow=true;
       return ;
     }
+    if(event.itemIndex == 0){
+      this.DataGridshow=true;
+      return;
+    }
+    this.DataGridshow=false;
     this.TabPanelshow=false;
     this.tabContent = this.tabs[event.itemIndex].content;
 
+  }
+
+  formdatas(event){
+    this.tabs.push(event);
   }
   AddTab(event){
     let Items = Array<object>();
@@ -41,22 +53,17 @@ export class TabComponent implements OnInit {
       dataField:'ID',
       editorType:null,
       editorOptions:null,
-
-      
-    },
+},
     {
       dataField:'text',
       editorType:null,
       editorOptions:null,
-
-    },
+},
     {
       dataField:'icon',
       editorType:null,
       editorOptions:null,
-
-      
-    },
+},
     {
       dataField:'content',
       editorType:null,
@@ -75,5 +82,9 @@ export class TabComponent implements OnInit {
     },false,Items);
     this.popComponent.popupVisible=true;
 
+  }
+
+  OnTabPanelSelectionChanged(event){
+    let value = this.TextAreaCompnoent.GetTextAreaData();
   }
 }

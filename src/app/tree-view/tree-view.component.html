@@ -1,0 +1,13 @@
+<dx-tree-view
+    #treeview
+    [dataSource]="Items"
+    [(width)]="width"
+    [searchEnabled]="true"
+    searchMode="contains"
+    [(height)]="height"
+    keyExpr="Id"
+    displayExpr="ValueName"
+    parentIdExpr="ParentID"
+    (onItemClick)="selectItem($event)"
+    dataStructure="plain"
+></dx-tree-view>

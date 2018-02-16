@@ -12,6 +12,8 @@ import { PopupsComponent } from './popups/popups.component';
 import { PopupDirective } from './popup-directive';
 import { TabComponent } from './tab/tab.component';
 import {  TabServices } from './tab.service';
+import { TextAreaComponent } from './text-area/text-area.component';
+import { TreeViewComponent } from './tree-view/tree-view.component';
 
 
 
@@ -23,6 +25,8 @@ import {  TabServices } from './tab.service';
     PopupsComponent,
     PopupDirective,
     TabComponent,
+    TextAreaComponent,
+    TreeViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,8 @@ import {  TabServices } from './tab.service';
       { path:'DataGrid', component : DataGridComponent},
       {path:'GenralControl',component:GenralControlComponent},
       {path:'Popup',component:PopupsComponent},
-      {path:'Tabs',component:TabComponent}
+      {path:'Tabs',component:TabComponent},
+      {path:'TreeView',component:TreeViewComponent}
     ])
   ],
   providers: [DataGridService,AppService,TabServices],

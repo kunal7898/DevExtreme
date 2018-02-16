@@ -53,9 +53,8 @@ export class DataGridComponent implements OnInit  {
     DataSourceService.loadDataSource();
     this.employees = Datagridservice.getEmployees();
     this.columns=GridColumns.getColumns();
+    }
     
-
-  }
    
   ngOnInit() {
       

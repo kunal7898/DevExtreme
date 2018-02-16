@@ -1,0 +1,16 @@
+<div>
+    <dx-text-area
+    [height]="90"
+    [(value)]="valueForEditableTextArea"
+    [valueChangeEvent]="eventValue"
+    (onInput)="onValueChanged($event)">
+    </dx-text-area>
+    
+    <dx-button
+    text="Save"
+    (onClick)="onClick($event)"
+    [type]="ButtonType"
+    [useSubmitBehavior]="true"
+    >
+    </dx-button>
+</div>
