@@ -39,6 +39,7 @@ export class TreeViewComponent implements OnInit {
   }
 
   selectItem(event){
+    event.node.expanded=true;
     if(event.node.children.length>0){
       return;
     }

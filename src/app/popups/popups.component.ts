@@ -115,6 +115,7 @@ public getEditorOptions(Type,PicklistId):any{
       searchEnabled: true,
       onSelectionChanged:function(e){
         window.alert("event fired");
+        this.popupVisible=false;
        } 
     };  
   else

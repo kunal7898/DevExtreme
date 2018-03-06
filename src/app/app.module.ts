@@ -14,7 +14,8 @@ import { TabComponent } from './tab/tab.component';
 import {  TabServices } from './tab.service';
 import { TextAreaComponent } from './text-area/text-area.component';
 import { TreeViewComponent } from './tree-view/tree-view.component';
-
+import { DraggableComponent } from './draggable/draggable.component';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 
 @NgModule({
@@ -27,16 +28,19 @@ import { TreeViewComponent } from './tree-view/tree-view.component';
     TabComponent,
     TextAreaComponent,
     TreeViewComponent,
+    DraggableComponent,
   ],
   imports: [
     BrowserModule,
+    AngularDraggableModule,
     DevExtremeModule,
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
       {path:'GenralControl',component:GenralControlComponent},
       {path:'Popup',component:PopupsComponent},
       {path:'Tabs',component:TabComponent},
-      {path:'TreeView',component:TreeViewComponent}
+      {path:'TreeView',component:TreeViewComponent},
+      {path:'SlideOut',component:DraggableComponent}
     ])
   ],
   providers: [DataGridService,AppService,TabServices],
