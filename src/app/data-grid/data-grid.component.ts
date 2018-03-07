@@ -1,12 +1,12 @@
 import { GridColumns } from './data-grid.columns';
 import { Employe, DataGridService } from './../data-grid.service';
-import { Component, Output,OnInit,Input,EventEmitter,ViewChild,ViewContainerRef,ComponentFactoryResolver } from '@angular/core';
+import { Component, Output,OnInit,Input,EventEmitter,ViewChild,ComponentFactoryResolver } from '@angular/core';
 import {DevExtremeModule} from 'devextreme-angular';
 import { DataSourceService } from '../data-source.service';
 import { PopupsComponent } from '../popups/popups.component';
 import { Window } from 'selenium-webdriver';
 import { PopupHelper } from '../popups/popup-addhelper';
-import { PopupDirective } from '../popup-directive';
+
 
 
 

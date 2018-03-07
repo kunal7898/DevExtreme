@@ -3,7 +3,7 @@ import { Input,ComponentFactoryResolver ,Output,EventEmitter} from '@angular/cor
 import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 import { PopupViewResolver } from '../PopupViewResolver';
 import { TabComponent } from '../tab/tab.component';
-
+import { confirm } from 'devextreme/ui/dialog';
 
 @Component({
   selector: 'app-popups',
@@ -126,6 +126,16 @@ public setPopUpVisible(value:boolean){
    this.popupVisible=value;
  }
 
+ onButtonClick(Message,title): Promise<boolean> {
+  var result = confirm(Message, title);
+
+  return new Promise<boolean>((resolve, reject) => {
+    result.done(function (dialogResult) {
+      resolve(dialogResult);
+    });
+ 
+  });
+}
 
 
 }

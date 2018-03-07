@@ -15,7 +15,9 @@ export class TabComponent implements OnInit {
   @ViewChild(TextAreaComponent) private TextAreaCompnoent :TextAreaComponent;
   TabPanelshow:boolean=false;
   DataGridshow:boolean=false;
+  selectedItem:string=null;
   public tabs: Tab[];
+  SelectedIndex:number=null;
   tabContent:any;
   constructor(TabService?:TabServices) {
     this.tabs = TabService.getTabs();
@@ -84,7 +86,18 @@ export class TabComponent implements OnInit {
 
   }
 
+  CloseEvent(event,index){
+this.popComponent.onButtonClick("Are You Sure You want to Delete","Confirm Changes").then((response) => {
+ if(response){
+   this.tabs.splice(this.SelectedIndex,1);
+ }
+});
+  }
   OnTabPanelSelectionChanged(event){
     let value = this.TextAreaCompnoent.GetTextAreaData();
   }
+  onItemRendered(event){
+this.SelectedIndex = event.itemIndex; 
+  }
+  
 }
