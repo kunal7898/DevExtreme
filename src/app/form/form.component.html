@@ -1,0 +1,30 @@
+<dx-form id="formdata" [(formData)]="formData" 
+[(items)]="items"
+></dx-form>
+
+<dx-tab-panel
+ 
+[height]="260"
+[dataSource]="tabs"
+[selectedIndex]="0"
+[loop]="false"
+[animationEnabled]="true"
+[swipeEnabled]="true"
+(onSelectionChanged)="OnTabPanelSelectionChanged($event)"
+(onItemRendered)="onItemRendered($event)"
+>
+
+<div *dxTemplate="let Tab of 'title'">
+<span>{{Tab.text}}  
+
+</span>
+ 
+</div>
+<div *dxTemplate="let Tab of 'item'">
+<div>
+    <app-data-grid>
+  
+    </app-data-grid>
+</div>
+</div>
+</dx-tab-panel>
