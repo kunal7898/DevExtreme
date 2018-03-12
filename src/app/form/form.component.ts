@@ -28,8 +28,8 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     this.formData=this.SetFormData();
     this.items =this.LoadInnerItems(this.LoadHeaderItems());
-    this.DataGridComponent.SetData( this.Datagridservice.getEmployees());
-    this.DataGridComponent.SetColumn(GridColumns.getColumns());
+    //this.DataGridComponent.SetData( this.Datagridservice.getEmployees());
+    //this.DataGridComponent.SetColumn(GridColumns.getColumns());
   }
 
 public SetFormData(){
