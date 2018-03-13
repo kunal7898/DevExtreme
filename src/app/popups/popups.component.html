@@ -1,3 +1,4 @@
+<div class="loadpanel" dx-load-panel="loadOptions"></div>
 
 <dx-popup id="popup" 
 class="popup"
@@ -11,6 +12,9 @@ class="popup"
 
 >
 <div *dxTemplate="let data of 'content'">
+    
+
+
 <dx-form id="formdata" [(formData)]="formData" 
 [(items)]="items"
 validationGroup="dxvalidationGroup"

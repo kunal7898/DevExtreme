@@ -24,6 +24,26 @@ export class PopupsComponent {
   popupVisible : boolean;
   valueemitted:string ='hello';
   tabserice:any;
+  showIndicator = true;
+  showPane = true;
+   shading = true;
+  loadingVisible:boolean=true;
+  loadOptions = {
+    shadingColor: "rgba(0,0,0,0.4)",
+    bindingOptions: {
+      visible: "loadingVisible",
+      showIndicator: "showIndicator",
+      showPane: "showPane",
+      shading: "shading",
+      closeOnOutsideClick: "closeOnOutsideClick"
+    },       
+    onShown: function(){
+      
+    },
+    onHidden: function(){
+      
+    }
+}
   //dx form 
   formData:{};
   items :any[];
@@ -46,6 +66,7 @@ ButtonType:string;
 
 
 public setPopupFormData(Data,IsDataGrid,items){
+  this.loadingVisible=true;
   let viewresolver = new PopupViewResolver();
   this.formData=Data;
   this.IsDataGrid=IsDataGrid;

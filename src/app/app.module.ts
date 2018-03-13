@@ -15,6 +15,11 @@ import { TextAreaComponent } from './text-area/text-area.component';
 import { TreeViewComponent } from './tree-view/tree-view.component';
 import { DraggableComponent } from './draggable/draggable.component';
 import { FormComponent } from './form/form.component';
+import { CustomerComponent } from './customer/customer.component';
+import { CustomerAddressComponent } from './customer-address/customer-address.component';
+import { SlideOutComponent } from './slide-out/slide-out.component';
+import { Customer, CustomerService } from './Services/customer.service';
+import slide_out from 'devextreme/ui/slide_out';
 
 
 
@@ -29,6 +34,9 @@ import { FormComponent } from './form/form.component';
     TreeViewComponent,
     DraggableComponent,
     FormComponent,
+    CustomerComponent,
+    CustomerAddressComponent,
+    SlideOutComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,10 +49,12 @@ import { FormComponent } from './form/form.component';
       {path:'Tabs',component:TabComponent},
       {path:'TreeView',component:TreeViewComponent},
       {path:'SlideOut',component:DraggableComponent},
-      {path:'Form',component:FormComponent}
+      {path:'Form',component:FormComponent},
+      {path:'CustomerForm',component:CustomerComponent},
+      {path:'Slide',component:SlideOutComponent}
     ])
   ],
-  providers: [DataGridService,AppService,TabServices],
+  providers: [DataGridService,AppService,TabServices,CustomerService],
   bootstrap: [AppComponent],
 })
 

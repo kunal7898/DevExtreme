@@ -87,6 +87,7 @@ export class TabComponent implements OnInit {
   }
 
   CloseEvent(event,index){
+    
 this.popComponent.onButtonClick("Are You Sure You want to Delete","Confirm Changes").then((response) => {
  if(response){
    this.tabs.splice(this.SelectedIndex,1);
