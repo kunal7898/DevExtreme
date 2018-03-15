@@ -2,6 +2,7 @@ import { Employe, DataGridService } from './../data-grid.service';
 import { Input } from "@angular/core";
 import { Promise } from "q";
 import { forEach } from '@angular/router/src/utils/collection';
+import * as $ from 'jquery';
 
 export class GridColumns{
 
@@ -24,7 +25,23 @@ constructor(){
    obj.getColumns().forEach((eachObj) => {
        
         if (eachObj["AttributeType"]=='number'){
-        columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+        columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+        cellTemplate:function(container, options){
+            // var fieldData = options.value,
+            //   fieldHtml = "";
+            // if(fieldData && options.rowType=="data" && options.columnIndex==0 ) {
+            //     $('<a/>').addClass('dx-link')
+            //     .text(options.text)
+            //     .on('dxclick', function (e) {
+            //         console.log("item-clicked");
+            //     //  }); document.addEventListener('dxclick', function(options) {
+            //     //         console.log("item-clicked");
+          
+            // })
+            // .appendTo(container);
+          
+            //      }
+        }})
     }
         if (eachObj["AttributeType"]=='string'){
         columns.push({width :100, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
@@ -46,6 +63,19 @@ constructor(){
 
    return columns;
 
+   }
+
+   public  LinkClickEvent(event){
+       window.alert("hh");
+   }
+
+   public static CellTemplate(container, options){
+    $('<a/>').addClass('dx-link')
+    .text('Invoice')
+    .on('dxclick', function () {
+        window.alert("hello");
+    })
+    .appendTo(container);
    }
 
    

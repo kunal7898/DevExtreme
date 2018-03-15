@@ -4,6 +4,8 @@ import {DevExtremeModule} from 'devextreme-angular';
 import { CustomerService } from '../Services/customer.service';
 import { Window } from 'selenium-webdriver';
 import { DataGridComponent } from '../data-grid/data-grid.component';
+import { ActivatedRoute,Router } from '@angular/router';
+
 
 
 @Component({
@@ -22,7 +24,8 @@ export class CustomerComponent implements OnInit {
   GlobalCustomerRefobj : CustomerService;
   MenuData:any[];
 
-  constructor(CustomerService:CustomerService) {
+  constructor(CustomerService:CustomerService,private route: ActivatedRoute,
+    private router: Router) {
    this.MenuData=CustomerService.getCustomerList();
    this.GlobalCustomerRefobj = CustomerService;
  
@@ -70,6 +73,7 @@ public SetFormData(){
 public  ItemClickEvent(event){
   this.formData =  this.GlobalCustomerRefobj.getCustomerById(event.itemData.ID);
   this.items = this.LoadInnerItems(this.GlobalCustomerRefobj.getColumns());
+  this.router.navigate([ '/CustomerForm/view', event.itemData.ID ], { relativeTo: this.route });
 }
 
 

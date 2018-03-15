@@ -20,6 +20,11 @@ import { CustomerAddressComponent } from './customer-address/customer-address.co
 import { SlideOutComponent } from './slide-out/slide-out.component';
 import { Customer, CustomerService } from './Services/customer.service';
 import slide_out from 'devextreme/ui/slide_out';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { CustomDataSourceComponent } from './custom-data-source/custom-data-source.component';
+import { CustomService } from './custom-service/customservice.service';
+import { CelltemplateComponent } from './celltemplate/celltemplate.component';
+
 
 
 
@@ -37,6 +42,10 @@ import slide_out from 'devextreme/ui/slide_out';
     CustomerComponent,
     CustomerAddressComponent,
     SlideOutComponent,
+    CustomerFormComponent,
+    CustomDataSourceComponent,
+    CelltemplateComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -50,12 +59,20 @@ import slide_out from 'devextreme/ui/slide_out';
       {path:'TreeView',component:TreeViewComponent},
       {path:'SlideOut',component:DraggableComponent},
       {path:'Form',component:FormComponent},
-      {path:'CustomerForm',component:CustomerComponent},
+      {path:'CustomDataSource',component:CustomDataSourceComponent},
+      {path:'CellTemplate',component:CelltemplateComponent},
+      {path:'CustomerForm',component:CustomerComponent,
+      children: [
+        {
+          path: 'view/:Customer-Id',
+          component: CustomerFormComponent
+        }],},
       {path:'Slide',component:SlideOutComponent}
     ])
   ],
-  providers: [DataGridService,AppService,TabServices,CustomerService],
+  providers: [DataGridService,AppService,TabServices,CustomerService,CustomService],
   bootstrap: [AppComponent],
+  exports: [ RouterModule ]
 })
 
 

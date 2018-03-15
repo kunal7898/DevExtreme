@@ -138,7 +138,7 @@ export class DataGridService {
 }
 getColumns(){
   let columns = new Array<object>();
-  columns.push({code: 'ID', AttributeType:'number'},{code:'FirstName',AttributeType:'string'},{code:'LastName',AttributeType:'string'},{code:'Position',AttributeType:'string'},{code:'BirthDate',AttributeType:'date'},{code:'state',AttributeType:'Lookup',PicklistMasterId:1});
+  columns.push({code: 'ID', AttributeType:'number',IscellTemplate:true},{code:'FirstName',AttributeType:'string',IscellTemplate:false},{code:'LastName',AttributeType:'string',IscellTemplate:false},{code:'Position',AttributeType:'string',IscellTemplate:false},{code:'BirthDate',AttributeType:'date',IscellTemplate:false},{code:'state',AttributeType:'Lookup',PicklistMasterId:1,IscellTemplate:false});
   return columns;
 }
 

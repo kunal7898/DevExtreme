@@ -19,7 +19,10 @@ import { PopupHelper } from '../popups/popup-addhelper';
   templateUrl: './data-grid.component.html',
   styleUrls: ['./data-grid.component.css'],
   providers: [DataGridService,DataSourceService],
-  encapsulation :ViewEncapsulation.None
+  encapsulation :ViewEncapsulation.None,
+  host: {
+    '(document:click)': 'LinkClickEvent($event)'
+  }
 
 })
 export class DataGridComponent implements OnInit  {
@@ -49,7 +52,7 @@ export class DataGridComponent implements OnInit  {
  
   editing={
     mode: "row",
-    allowUpdating: true,
+    allowUpdating: false,
     allowAdding:true,
     allowDeleting :true,
 };
@@ -65,6 +68,10 @@ export class DataGridComponent implements OnInit  {
    
   ngOnInit() {
       
+    }
+
+    public cellTemplate(){
+
     }
     
     onRowClick(e){
@@ -82,10 +89,18 @@ export class DataGridComponent implements OnInit  {
     this.columns= ColumnData;
   }
 
-  public onCellPrepared(event){
-    
+  public onCellPrepared(options){
+    var fieldData = options.value,
+    fieldHtml = "";
+// if(fieldData && options.rowType=="data" && options.columnIndex==0 ) {
+//   options.cellElement.innerHTML="<dx-button id='LinkClick' class='dx-link dx-link-edit' (onClick)='LinkClickEvent()'>"+options.cellElement.innerHTML+"</dx-button>"  
+// }
   }
 
+
+public LinkClickEvent(event){
+window.alert(event);
+}
 
 public showLoadPanel(value) {
  
