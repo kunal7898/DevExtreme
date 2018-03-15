@@ -20,9 +20,9 @@ import { PopupHelper } from '../popups/popup-addhelper';
   styleUrls: ['./data-grid.component.css'],
   providers: [DataGridService,DataSourceService],
   encapsulation :ViewEncapsulation.None,
-  host: {
-    '(document:click)': 'LinkClickEvent($event)'
-  }
+  // host: {
+  //   '(document:click)': 'LinkClickEvent($event)'
+  // }
 
 })
 export class DataGridComponent implements OnInit  {
