@@ -134,7 +134,7 @@ export class DataSourceService {
       "StateID": 5
   }]));
 
-
+  localStorage.setItem('4', JSON.stringify( ["Male", "Female"]));
     
   }
 

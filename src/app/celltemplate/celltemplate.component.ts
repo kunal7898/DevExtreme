@@ -5,6 +5,7 @@ import { Employe } from '../app.service';
 import * as $ from 'jquery';
 import {DevExtremeModule} from 'devextreme-angular';
 
+
 @Component({
   selector: 'app-celltemplate',
   templateUrl: './celltemplate.component.html',
@@ -12,6 +13,7 @@ import {DevExtremeModule} from 'devextreme-angular';
 })
 export class CelltemplateComponent implements OnInit {
   @Output() ItemClickEvent: EventEmitter<any> = new EventEmitter();
+  parameters:Array<string> = ["FU"];
   title:string;
   dragEnabled:boolean;
   closeOnOutsideClick:boolean;
@@ -39,6 +41,7 @@ export class CelltemplateComponent implements OnInit {
    }
 
   ngOnInit() {
+    var self = this;
   }
 
 
@@ -48,8 +51,8 @@ export class CelltemplateComponent implements OnInit {
             
   }
 
-public testEventEmmiter(){
-
+public testEventEmmiter(options){
+window.alert(options.text)
 }
 
   public  getColumns(){
@@ -61,15 +64,15 @@ public testEventEmmiter(){
         
          if (eachObj["AttributeType"]=='number'){
          columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
-         cellTemplate: eachObj["IscellTemplate"]==true? function(container, options){
-          $('<a/>').addClass('dx-link')
+         cellTemplate:function(container, options){
+            $('<a/>').addClass('dx-link')
                         .text(options.text)
-                        .click('dxclick', function () {
-                       window.alert(options.text);
-                      
+                        .click('dxclick', (options) => {  
+                        
+                        
                         })
                         .appendTo(container);
-         }:null})
+         }})
      }
          if (eachObj["AttributeType"]=='string'){
          columns.push({width :100, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})

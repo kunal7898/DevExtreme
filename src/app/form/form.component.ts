@@ -5,7 +5,8 @@ import { Tab, TabServices } from '../tab.service';
 import { DataGridComponent } from '../data-grid/data-grid.component';
 import { DataGridService } from '../data-grid.service';
 import { GridColumns } from '../data-grid/data-grid.columns';
-
+import * as $ from 'jquery';
+import { EventEmitter } from 'selenium-webdriver';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -33,7 +34,7 @@ export class FormComponent implements OnInit {
   }
 
 public SetFormData(){
-  var Obj = {"ID":"","FirstName":"","LastName":"","Position":"","BirthDate":"","HireDate":"","Address":"","State":"","ZipCode":"","Notes":""};
+  var Obj = {"ID":"","FirstName":"","LastName":"","Position":"","BirthDate":"","HireDate":"","Address":"","State":"","ZipCode":"","Notes":"","Isactive":""};
   return Obj;
   
 }
@@ -141,6 +142,10 @@ let  validationRule =  Array<object>();
     return "dxDateBox";
     if(Attributetype=="textarea")
     return "dxTextArea";
+    if(Attributetype=="checkbox")
+    return "dxCheckBox";
+    if(Attributetype=="radiobox")
+    return "dxRadioGroup";
     else
     return null;
  
@@ -183,10 +188,34 @@ let  validationRule =  Array<object>();
        e.component._dataSource._storeLoadOptions.filter=e.component._options.items.filter(StateID)
        }
     };
+    if(Type=="dxCheckBox"){
+      return {
+        disabled:false,
+        value:true,
+        readOnly:false,
+        onValueChanged:function(e){
+          
+          window.alert(e);
+         }
+      }
+    }
+    if(Type=="dxRadioGroup"){
+      return {
+        items:JSON.parse(localStorage.getItem(PicklistId)),
+        onValueChanged:function(e){
+          
+          window.alert(e);
+         }
+      }
+    }
   else
   return null;
 }
 
+
+public CheckBoxEvent(){
+  window.alert("dff");
+}
  
 
 }
