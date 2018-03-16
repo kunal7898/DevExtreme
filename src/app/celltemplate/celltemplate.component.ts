@@ -52,7 +52,7 @@ export class CelltemplateComponent implements OnInit {
   }
 
 public testEventEmmiter(options){
-window.alert(options.text)
+window.alert(options)
 }
 
   public  getColumns(){
@@ -65,15 +65,12 @@ window.alert(options.text)
          if (eachObj["AttributeType"]=='number'){
          columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
          cellTemplate:function(container, options){
-         
+        var  Data=options;
           var dataGrid = options.component;
             $('<a/>').addClass('dx-link')
                         .text(options.text)
-                        .click('dxclick', (options) => {  
-                        console.log(component);
-                        component.testEventEmmiter(options);
-                        console.log(dataGrid);
-                        
+                        .click('dxclick', function(){
+                          component.testEventEmmiter(options.data);
                         })
                         .appendTo(container);
          }})
@@ -102,3 +99,26 @@ window.alert(options.text)
  
   
 }
+
+
+// .click('dxclick', (options) => {
+// var _rowIndex = options.currentTarget.getAttribute('rowIndex');
+// var data = dataGrid.getKeyByRowIndex(_rowIndex);
+// component.testEventEmmiter(data);
+// }) .click('dxclick', (options) => {
+// var _rowIndex = options.currentTarget.getAttribute('rowIndex');
+// var data = dataGrid.getKeyByRowIndex(_rowIndex);
+// component.testEventEmmiter(data);
+// }) 
+ 
+
+// $('<a/>').addClass('dx-link')
+// .text(options.text)
+// .attr('rowIndex', options.rowIndex)
+// .click('dxclick', (options) => {
+// var _rowIndex = options.currentTarget.getAttribute('rowIndex');
+// var data = dataGrid.getKeyByRowIndex(_rowIndex);
+// component.testEventEmmiter(data);
+// })
+// .appendTo(container);
+
