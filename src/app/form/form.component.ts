@@ -192,7 +192,9 @@ let  validationRule =  Array<object>();
       return {
         disabled:false,
         value:true,
+        text:'hello',
         readOnly:false,
+        tabIndex:1,
         onValueChanged:function(e){
           
           window.alert(e);

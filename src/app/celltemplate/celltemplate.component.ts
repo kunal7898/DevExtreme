@@ -61,14 +61,18 @@ window.alert(options.text)
     let obj = new DataGridService();
     
     obj.getColumns().forEach((eachObj) => {
-        
+      var component = this;
          if (eachObj["AttributeType"]=='number'){
          columns.push({width :80, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
          cellTemplate:function(container, options){
+         
+          var dataGrid = options.component;
             $('<a/>').addClass('dx-link')
                         .text(options.text)
                         .click('dxclick', (options) => {  
-                        
+                        console.log(component);
+                        component.testEventEmmiter(options);
+                        console.log(dataGrid);
                         
                         })
                         .appendTo(container);
