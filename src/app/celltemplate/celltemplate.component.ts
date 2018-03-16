@@ -51,7 +51,7 @@ export class CelltemplateComponent implements OnInit {
             
   }
 
-public testEventEmmiter(options){
+public RowItemClick(options){
 window.alert(options)
 }
 
@@ -70,7 +70,7 @@ window.alert(options)
             $('<a/>').addClass('dx-link')
                         .text(options.text)
                         .click('dxclick', function(){
-                          component.testEventEmmiter(options.data);
+                          component.RowItemClick(options.data);
                         })
                         .appendTo(container);
          }})
