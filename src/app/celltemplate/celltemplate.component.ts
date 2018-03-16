@@ -25,13 +25,11 @@ export class CelltemplateComponent implements OnInit {
   height="400";
   employees: Employe[];
   columns=[];
+  editing:any;
+  paging:any;
+  pager:any;
 
-  editing={
-    mode: "row",
-    allowUpdating: false,
-    allowAdding:true,
-    allowDeleting :true,
-};
+
 
   constructor(private Datagridservice:DataGridService) {
     DataSourceService.loadDataSource();
@@ -42,8 +40,26 @@ export class CelltemplateComponent implements OnInit {
 
   ngOnInit() {
     var self = this;
+   this.Gridconfiguration();
   }
 
+  public Gridconfiguration(){
+    this.editing={
+      mode: "row",
+      allowUpdating: false,
+      allowAdding:true,
+      allowDeleting :true,
+  };
+  
+  this.paging= {
+    pageSize: 5
+  }
+  this.pager= {
+    showNavigationButtons: true
+  }
+
+
+  }
 
   public onCellPrepared(e){
     if(e.rowType === "data" && e.column.command === "edit") {
