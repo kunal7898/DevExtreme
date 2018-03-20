@@ -1,0 +1,28 @@
+<dx-tab-panel
+    
+[height]="260"
+[dataSource]="tabs"
+[selectedIndex]="0"
+[loop]="false"
+[animationEnabled]="true"
+[swipeEnabled]="true"
+(onSelectionChanged)="OnTabPanelSelectionChanged($event)"
+
+>
+
+<div *dxTemplate="let Tab of 'title'">
+<span>{{Tab.text}}  
+
+    <!-- <div class="dx-button-content" (click)="CloseEvent($event,$index)"><i class="dx-icon dx-icon-close" ></i></div> -->
+
+</span>
+ 
+</div>
+<div *dxTemplate="let Tab of 'item'">
+<div>
+  <app-data-grid [GridSettings]="CurrentGridSetting"> 
+
+  </app-data-grid>
+</div>
+</div>
+</dx-tab-panel>

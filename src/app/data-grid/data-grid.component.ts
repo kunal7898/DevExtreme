@@ -1,6 +1,6 @@
 import { GridColumns } from './data-grid.columns';
 import { Employe, DataGridService } from './../data-grid.service';
-import { Component, Output,OnInit,Input,EventEmitter,ViewChild,ComponentFactoryResolver,ViewEncapsulation } from '@angular/core';
+import { Component, Output,OnInit,Input,EventEmitter,ViewChild,ComponentFactoryResolver,ViewEncapsulation,OnChanges } from '@angular/core';
 import {DevExtremeModule} from 'devextreme-angular';
 import { DataSourceService } from '../data-source.service';
 import { PopupsComponent } from '../popups/popups.component';
@@ -25,10 +25,10 @@ import { PopupHelper } from '../popups/popup-addhelper';
   // }
 
 })
-export class DataGridComponent implements OnInit  {
+export class DataGridComponent implements OnInit,OnChanges  {
   employees: Employe[];
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
-  
+  @Input('GridSettings') GridSettings: Array<any>;
   @Output() visible  = new EventEmitter();
 
   ads: PopupHelper[];
@@ -68,6 +68,10 @@ export class DataGridComponent implements OnInit  {
    
   ngOnInit() {
       
+    }
+
+    ngOnChanges (){
+
     }
 
     public cellTemplate(){

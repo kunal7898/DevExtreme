@@ -24,6 +24,7 @@ import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { CustomDataSourceComponent } from './custom-data-source/custom-data-source.component';
 import { CustomService } from './custom-service/customservice.service';
 import { CelltemplateComponent } from './celltemplate/celltemplate.component';
+import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
 
 
 
@@ -45,6 +46,7 @@ import { CelltemplateComponent } from './celltemplate/celltemplate.component';
     CustomerFormComponent,
     CustomDataSourceComponent,
     CelltemplateComponent,
+    TabDataGridComponent,
 
   ],
   imports: [
@@ -61,6 +63,7 @@ import { CelltemplateComponent } from './celltemplate/celltemplate.component';
       {path:'Form',component:FormComponent},
       {path:'CustomDataSource',component:CustomDataSourceComponent},
       {path:'CellTemplate',component:CelltemplateComponent},
+      {path:'TabDataGrid',component:TabDataGridComponent},
       {path:'CustomerForm',component:CustomerComponent,
       children: [
         {

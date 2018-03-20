@@ -7,6 +7,7 @@ text="Add New"
 (onClick)="AddTab($event)"
 >
 </dx-button>
+
 <br>
 <div id="tabs">
   <dx-tabs
@@ -15,7 +16,7 @@ text="Add New"
       (onItemClick)="selectTab($event)"
   ></dx-tabs>
  
-<app-data-grid *ngIf="DataGridshow">
+<app-data-grid >
   
 </app-data-grid>
   {{tabContent}}

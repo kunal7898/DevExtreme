@@ -4,6 +4,7 @@ import { DataSourceService } from '../data-source.service';
 import { Employe } from '../app.service';
 import * as $ from 'jquery';
 import {DevExtremeModule} from 'devextreme-angular';
+import { confirm } from 'devextreme/ui/dialog';
 
 
 @Component({
@@ -62,6 +63,7 @@ export class CelltemplateComponent implements OnInit {
   }
 
   public onCellPrepared(e){
+  
     if(e.rowType === "data" && e.column.command === "edit") {
   }
             

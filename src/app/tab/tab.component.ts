@@ -2,13 +2,15 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import {  Tab, TabServices } from '../tab.service';
 import { PopupsComponent } from '../popups/popups.component';
 import { TextAreaComponent } from '../text-area/text-area.component';
+import { AlertService } from '../Services/alert.service';
+import { ToastService } from '../Services/toast.service';
 
 
 @Component({
   selector: 'app-tab',
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.css'],
-  providers:[TabServices]
+  providers:[AlertService,ToastService,TabServices]
 })
 export class TabComponent implements OnInit {
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
@@ -19,8 +21,12 @@ export class TabComponent implements OnInit {
   public tabs: Tab[];
   SelectedIndex:number=null;
   tabContent:any;
-  constructor(TabService?:TabServices) {
+  Alertservice:any;
+  Toastservice:any;
+  constructor( AlertService:AlertService, ToastService:ToastService,TabService?:TabServices) {
     this.tabs = TabService.getTabs();
+   this.Toastservice= ToastService;
+   this.Alertservice=AlertService;
    }
 
 
@@ -50,6 +56,17 @@ export class TabComponent implements OnInit {
     this.tabs.push(event);
   }
   AddTab(event){
+    this.Toastservice.SuccessNotify("Message",500,null);
+
+    this.Alertservice.ConfirmAlert("Are You Sure You want to Delete","Confirm Changes").then((response) => {
+    if(response){
+    window.alert("hhe") }
+ });
+ this.Alertservice.SuccessAlert("Test message","Message").then((response)=>{
+   //
+   window.alert(response);
+
+ })
     let Items = Array<object>();
     Items.push({
       dataField:'ID',
@@ -88,11 +105,11 @@ export class TabComponent implements OnInit {
 
   CloseEvent(event,index){
     
-this.popComponent.onButtonClick("Are You Sure You want to Delete","Confirm Changes").then((response) => {
- if(response){
-   this.tabs.splice(this.SelectedIndex,1);
- }
-});
+// this.popComponent.onButtonClick("Are You Sure You want to Delete","Confirm Changes").then((response) => {
+//  if(response){
+//    this.tabs.splice(this.SelectedIndex,1);
+//  }
+// });
   }
   OnTabPanelSelectionChanged(event){
     let value = this.TextAreaCompnoent.GetTextAreaData();

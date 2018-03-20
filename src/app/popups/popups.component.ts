@@ -5,6 +5,7 @@ import { PopupViewResolver } from '../PopupViewResolver';
 import { TabComponent } from '../tab/tab.component';
 import { confirm } from 'devextreme/ui/dialog';
 
+
 @Component({
   selector: 'app-popups',
   templateUrl: './popups.component.html',
@@ -149,7 +150,7 @@ public setPopUpVisible(value:boolean){
 
  onButtonClick(Message,title): Promise<boolean> {
   var result = confirm(Message, title);
-
+    
   return new Promise<boolean>((resolve, reject) => {
     result.done(function (dialogResult) {
       resolve(dialogResult);
