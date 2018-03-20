@@ -24,7 +24,11 @@ import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { CustomDataSourceComponent } from './custom-data-source/custom-data-source.component';
 import { CustomService } from './custom-service/customservice.service';
 import { CelltemplateComponent } from './celltemplate/celltemplate.component';
+<<<<<<< HEAD
 import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
+=======
+import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.component';
+>>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
 
 
 
@@ -46,7 +50,11 @@ import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
     CustomerFormComponent,
     CustomDataSourceComponent,
     CelltemplateComponent,
+<<<<<<< HEAD
     TabDataGridComponent,
+=======
+    TabedDataGridComponent,
+>>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
 
   ],
   imports: [
@@ -63,7 +71,11 @@ import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
       {path:'Form',component:FormComponent},
       {path:'CustomDataSource',component:CustomDataSourceComponent},
       {path:'CellTemplate',component:CelltemplateComponent},
+<<<<<<< HEAD
       {path:'TabDataGrid',component:TabDataGridComponent},
+=======
+      {path:'TabedDatagrid',component:TabedDataGridComponent},
+>>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
       {path:'CustomerForm',component:CustomerComponent,
       children: [
         {
