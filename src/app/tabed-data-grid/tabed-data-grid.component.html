@@ -1,0 +1,10 @@
+<dx-tab-panel
+    [dataSource]="tabs"
+    [selectedIndex]="0">
+     <div *dxTemplate="let company of 'templ1'">
+      <app-data-grid></app-data-grid>
+     </div>
+      <div *dxTemplate="let company of 'templ2'">
+        <app-data-grid></app-data-grid>
+     </div>
+    </dx-tab-panel>

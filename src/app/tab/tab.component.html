@@ -15,7 +15,7 @@ text="Add New"
       (onItemClick)="selectTab($event)"
   ></dx-tabs>
  
-<app-data-grid *ngIf="DataGridshow">
+<app-data-grid [GridSetting]="CurrentGridSetting">
   
 </app-data-grid>
   {{tabContent}}

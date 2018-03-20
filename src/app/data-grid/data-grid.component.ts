@@ -27,10 +27,11 @@ import { PopupHelper } from '../popups/popup-addhelper';
 })
 export class DataGridComponent implements OnInit  {
   employees: Employe[];
+ 
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
   
   @Output() visible  = new EventEmitter();
-
+  @Input() GridSetting;
   ads: PopupHelper[];
   PopUpwidth:number;
   PopUpheight:number;
