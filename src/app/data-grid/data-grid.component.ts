@@ -31,7 +31,7 @@ export class DataGridComponent implements OnInit  {
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
   
   @Output() visible  = new EventEmitter();
-  @Input() GridSetting;
+  @Input() GridSetting; 
   ads: PopupHelper[];
   PopUpwidth:number;
   PopUpheight:number;
