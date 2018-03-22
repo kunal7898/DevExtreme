@@ -31,7 +31,7 @@ export class DataGridComponent implements OnInit,OnChanges  {
   @ViewChild(PopupsComponent) private popComponent :PopupsComponent;
   @Input('GridSettings') GridSettings: Array<any>;
   @Output() visible  = new EventEmitter();
-  @Input() GridSetting;
+  @Input() GridSetting; 
   ads: PopupHelper[];
   PopUpwidth:number;
   PopUpheight:number;

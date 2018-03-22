@@ -11,11 +11,11 @@ import { CustomService } from '../custom-service/customservice.service';
     providers: [CustomService]
 })
 export class CustomDataSourceComponent implements OnInit {
-    dataSource: any = {};
+    gridDataSource: any = {};
     columns: any = {};
 
     constructor( @Inject(Http) http: Http, private customService: CustomService) {
-        this.dataSource.store = new CustomStore({
+        this.gridDataSource.store = new CustomStore({
             load: function (loadOptions: any) {
                 var params = '?';
 

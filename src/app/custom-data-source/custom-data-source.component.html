@@ -1,28 +1,12 @@
-<dx-data-grid id="gridContainer"
-    [dataSource]="dataSource"
-    (onCellPrepared)="onCellPrepared($event)">
-    [columns]="columns"
-    <!-- <dxi-column dataField="OrderNumber" cellTemplate="buttonCellTemplate"></dxi-column>
-    <dxi-column dataField="OrderDate"></dxi-column>
-    <dxi-column dataField="StoreCity"></dxi-column>
-    <dxi-column dataField="StoreState"></dxi-column>
-    <dxi-column dataField="Employee"></dxi-column>
-    <dxi-column dataField="SaleAmount" format="currency"></dxi-column> -->
-    <dxo-remote-operations
-        [sorting]="true"
-        [paging]="true">
-    </dxo-remote-operations>
-    <dxo-paging [pageSize]="12"></dxo-paging>
-    <dxo-pager
-        [showPageSizeSelector]="true"
-        [allowedPageSizes]="[8, 12, 20]"
-    ></dxo-pager>
-    
-    <div *dxTemplate="let cellData = data of 'buttonCellTemplate'">
-        <!-- <dx-button (onClick)="callNumber(cellData.value)" [text]="cellData.text"></dx-button> -->
-        <!-- <dx-button [text]="cellData.text"></dx-button> -->
-        <dx-button text="Delete"></dx-button> 
-        <!-- <span>Delete</span> -->
-        <!-- <a onclick="deleteRow()"> Delete</a> -->
-     </div>
-</dx-data-grid>
+<dx-data-grid
+     [dataSource]="gridDataSource"
+     [columns]="GridColumns"
+     [selection]="{ mode: 'single' }"
+     [hoverStateEnabled]="true"
+     [paging]="{ enabled: true, pageSize: 10 }"
+     [filterRow]="{ visible: true }"
+     [scrolling]="{ mode: 'infinite' }"
+     [height]="265"
+     [(selectedRowKeys)]="gridSelectedRowKeys"
+                    >
+   </dx-data-grid>

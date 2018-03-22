@@ -28,7 +28,11 @@ import { CelltemplateComponent } from './celltemplate/celltemplate.component';
 import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
 =======
 import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.component';
+<<<<<<< HEAD
 >>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
+=======
+import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.component';
+>>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
 
 
 
@@ -54,7 +58,11 @@ import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.compon
     TabDataGridComponent,
 =======
     TabedDataGridComponent,
+<<<<<<< HEAD
 >>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
+=======
+    CustomDropDownComponent,
+>>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
 
   ],
   imports: [
@@ -75,7 +83,11 @@ import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.compon
       {path:'TabDataGrid',component:TabDataGridComponent},
 =======
       {path:'TabedDatagrid',component:TabedDataGridComponent},
+<<<<<<< HEAD
 >>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
+=======
+      {path:'CustomDropDown',component:CustomDataSourceComponent},
+>>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
       {path:'CustomerForm',component:CustomerComponent,
       children: [
         {
