@@ -1,24 +1,57 @@
-<dx-drop-down-box
-[(value)]="gridBoxValue"
-valueExpr="ID"
-[displayExpr]="gridBox_displayExpr"
-placeholder="Select a value..."
-[showClearButton]="true"
-[dataSource]="gridDataSource"
->
+<div class="dx-fieldset">
 
-<div *dxTemplate="let data of 'content'">
-<dx-data-grid
-        [dataSource]="gridDataSource"
-        [columns]="['CompanyName', 'City', 'Phone']"
-        [selection]="{ mode: 'single' }"
-        [hoverStateEnabled]="true"
-        [paging]="{ enabled: true, pageSize: 10 }"
-        [filterRow]="{ visible: true }"
-        [scrolling]="{ mode: 'infinite' }"
-        [height]="265"
-        [(selectedRowKeys)]="gridSelectedRowKeys"
->
-</dx-data-grid>
-</div>
-</dx-drop-down-box>
+    <div class="dx-field">
+      <div class="dx-field-label">Select Box</div>
+      <div class="dx-field-value">
+        <dx-select-box [dataSource]="selectBoxData" displayExpr="country">
+        </dx-select-box>
+      </div>
+    </div>
+  
+    <div class="dx-field">
+      <div class="dx-field-label">Select Box With Custom Data Source</div>
+      <div class="dx-field-value">
+        <dx-select-box [dataSource]="selectBoxDataCustom" displayExpr="OrderNumber">
+        </dx-select-box>
+      </div>
+    </div>
+  
+     <div class="dx-field">
+      <div class="dx-field-label">DropDownBox with embedded DataGrid</div>
+      <div class="dx-field-value">
+  
+        <dx-drop-down-box 
+          valueExpr="OrderNumber" 
+          [displayExpr]="gridBox_displayExpr" 
+          placeholder="Select a value..." 
+          [showClearButton]="true"
+          [dataSource]="DropDownBoxData">
+  
+          <div *dxTemplate="let data of 'content'">
+            <dx-data-grid 
+            [dataSource]="DropDownBoxData" 
+            [columns]="['OrderNumber', 'StoreCity', 'StoreState']" 
+            [selection]="{ mode: 'single' }"
+            [hoverStateEnabled]="true" 
+            [paging]="{ enabled: true, pageSize: 10 }" 
+            [filterRow]="{ visible: true }" 
+            [scrolling]="{ mode: 'infinite' }"
+            [height]="265" [(selectedRowKeys)]="gridSelectedRowKeys">
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+  
+      </div>
+  
+  
+  
+    </div>
+   
+  
+    <div class="dx-field">
+      <dx-data-grid [dataSource]="gridData">
+      </dx-data-grid>
+    </div>
+  
+  
+  </div>

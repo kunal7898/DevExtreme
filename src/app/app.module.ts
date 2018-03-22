@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,NO_ERRORS_SCHEMA  } from '@angular/core';
 import {RouterModule} from '@angular/router';
-
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { DevExtremeModule } from 'devextreme-angular';
@@ -24,15 +24,12 @@ import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { CustomDataSourceComponent } from './custom-data-source/custom-data-source.component';
 import { CustomService } from './custom-service/customservice.service';
 import { CelltemplateComponent } from './celltemplate/celltemplate.component';
-<<<<<<< HEAD
+
 import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
-=======
 import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.component';
-<<<<<<< HEAD
->>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
-=======
 import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.component';
->>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
+
+
 
 
 
@@ -54,20 +51,14 @@ import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.com
     CustomerFormComponent,
     CustomDataSourceComponent,
     CelltemplateComponent,
-<<<<<<< HEAD
     TabDataGridComponent,
-=======
     TabedDataGridComponent,
-<<<<<<< HEAD
->>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
-=======
     CustomDropDownComponent,
->>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
 
   ],
   imports: [
     BrowserModule,
-
+    HttpModule,
     DevExtremeModule,
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
@@ -79,15 +70,12 @@ import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.com
       {path:'Form',component:FormComponent},
       {path:'CustomDataSource',component:CustomDataSourceComponent},
       {path:'CellTemplate',component:CelltemplateComponent},
-<<<<<<< HEAD
       {path:'TabDataGrid',component:TabDataGridComponent},
-=======
+
       {path:'TabedDatagrid',component:TabedDataGridComponent},
-<<<<<<< HEAD
->>>>>>> 4b54c091415a6091eeb8c8ff125aa5502908e4b5
-=======
-      {path:'CustomDropDown',component:CustomDataSourceComponent},
->>>>>>> 2c9c4b644fa65c0d1b880ff7698fe00497bb4c1e
+
+      {path:'CustomDropDown',component:CustomDropDownComponent},
+
       {path:'CustomerForm',component:CustomerComponent,
       children: [
         {
