@@ -17,13 +17,13 @@ export class CustomDataSourceFormComponent implements OnInit {
   SecondGroupCount: number = 0;
   formData: any;
   items: any[];
-
+  tabs :any[];
   constructor(private http: Http) { }
 
   ngOnInit() {
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
-  
+    this.tabs = CustomFormService.LoadTabs();
   }
 
   private SetFormData() {
@@ -108,7 +108,9 @@ export class CustomDataSourceFormComponent implements OnInit {
       return "dxRadioGroup";
     if(Attributetype == "DataGrid" )
     return "dxDataGrid";
-      
+    if(Attributetype == "Tab" )
+    return "dxTabs";
+    
     else
       return null;
 
@@ -134,6 +136,9 @@ export class CustomDataSourceFormComponent implements OnInit {
       if (Type == "dxDataGrid")
       return {
         dataSource: this.GetCustomDataSource(),
+        showRowLines: true,
+        showBorders: true,
+        height:"2",
         paging: {
             pagesize: 2
         },
@@ -148,6 +153,30 @@ export class CustomDataSourceFormComponent implements OnInit {
         remoteOperations:{
           paging:true
         }
+      };
+      if (Type == "dxTabs")
+      return {
+        dataSource: [
+          {     
+              id: 0,
+              text: "user", 
+              icon: "user", 
+              content: "User tab content" 
+          },
+          { 
+              id: 1,
+              text: "comment", 
+              icon: "comment", 
+              content: "Comment tab content" 
+          },
+          { 
+              id: 2,
+              text: "find", 
+              icon: "find", 
+              content: "Find tab content" 
+          }
+      ],
+      
       };
 
 
