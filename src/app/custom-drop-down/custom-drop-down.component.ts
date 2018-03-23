@@ -15,7 +15,7 @@ import CustomStore from 'devextreme/data/custom_store';
 export class CustomDropDownComponent implements OnInit {
 
     selectBoxDataCustom: any = {};
-    DropDownBoxData: any = {};
+     DropDownBoxData: any = {};
      _gridBoxValue: number = 3;
      _gridSelectedRowKeys: number[] = [3];
   
@@ -89,9 +89,10 @@ export class CustomDropDownComponent implements OnInit {
                 };
               });
           },
+          
         }),
         paginate: true,
-        pageSize: 10
+        pageSize: 5
       })
     }
   

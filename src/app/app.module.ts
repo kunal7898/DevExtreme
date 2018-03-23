@@ -28,6 +28,7 @@ import { CelltemplateComponent } from './celltemplate/celltemplate.component';
 import { TabDataGridComponent } from './tab-data-grid/tab-data-grid.component';
 import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.component';
 import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.component';
+import { CustomDataSourceFormComponent } from './custom-data-source-form/custom-data-source-form.component';
 
 
 
@@ -54,6 +55,7 @@ import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.com
     TabDataGridComponent,
     TabedDataGridComponent,
     CustomDropDownComponent,
+    CustomDataSourceFormComponent,
 
   ],
   imports: [
@@ -73,7 +75,7 @@ import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.com
       {path:'TabDataGrid',component:TabDataGridComponent},
 
       {path:'TabedDatagrid',component:TabedDataGridComponent},
-
+      {path:'CustomdatasourceForm',component:CustomDataSourceFormComponent},
       {path:'CustomDropDown',component:CustomDropDownComponent},
 
       {path:'CustomerForm',component:CustomerComponent,

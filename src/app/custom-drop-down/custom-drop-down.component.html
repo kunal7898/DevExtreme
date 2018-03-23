@@ -16,12 +16,14 @@
       </div>
     </div>
   
+    
      <div class="dx-field">
       <div class="dx-field-label">DropDownBox with embedded DataGrid</div>
       <div class="dx-field-value">
   
         <dx-drop-down-box 
-          valueExpr="OrderNumber" 
+         value="CategoryName"
+          valueExpr="CategoryID" 
           [displayExpr]="gridBox_displayExpr" 
           placeholder="Select a value..." 
           [showClearButton]="true"
@@ -30,13 +32,14 @@
           <div *dxTemplate="let data of 'content'">
             <dx-data-grid 
             [dataSource]="DropDownBoxData" 
-            [columns]="['OrderNumber', 'StoreCity', 'StoreState']" 
+            [columns]="['CategoryID','CategoryName', 'Description']" 
             [selection]="{ mode: 'single' }"
             [hoverStateEnabled]="true" 
             [paging]="{ enabled: true, pageSize: 10 }" 
             [filterRow]="{ visible: true }" 
             [scrolling]="{ mode: 'infinite' }"
-            [height]="265" [(selectedRowKeys)]="gridSelectedRowKeys">
+            [height]="265" 
+            [(selectedRowKeys)]="gridSelectedRowKeys">
             </dx-data-grid>
           </div>
         </dx-drop-down-box>
