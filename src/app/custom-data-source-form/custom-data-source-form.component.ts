@@ -15,7 +15,7 @@ import DataSource from 'devextreme/data/data_source';
 export class CustomDataSourceFormComponent implements OnInit {
   FirstgroupCount: number = 0;
   SecondGroupCount: number = 0;
-  formData: {};
+  formData: any;
   items: any[];
 
   constructor(private http: Http) { }
@@ -23,10 +23,11 @@ export class CustomDataSourceFormComponent implements OnInit {
   ngOnInit() {
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
+  
   }
 
   private SetFormData() {
-    var Obj = { "State": "" };
+    var Obj = [{ "State": "" }];
     return Obj;
   }
 
@@ -105,6 +106,9 @@ export class CustomDataSourceFormComponent implements OnInit {
       return "dxCheckBox";
     if (Attributetype == "radiobox")
       return "dxRadioGroup";
+    if(Attributetype == "DataGrid" )
+    return "dxDataGrid";
+      
     else
       return null;
 
@@ -125,6 +129,24 @@ export class CustomDataSourceFormComponent implements OnInit {
           var get = this.DataSource;
           window.alert("event fired");
           this.popupVisible = false;
+        }
+      };
+      if (Type == "dxDataGrid")
+      return {
+        dataSource: this.GetCustomDataSource(),
+        paging: {
+            pagesize: 2
+        },
+        sorting: {   
+            mode: "multiple"
+            },
+        allowColumnReordering: true,
+        allowColumnResizeing: true,
+        filterRow: {
+            visible: true
+        },
+        remoteOperations:{
+          paging:true
         }
       };
 
@@ -150,6 +172,7 @@ export class CustomDataSourceFormComponent implements OnInit {
               var json = response.json();
               console.log(json.items);
               return {
+                totalCount:json.totalCount,
                 data: json.items
               };
             });

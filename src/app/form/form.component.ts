@@ -157,7 +157,7 @@ export class FormComponent implements OnInit {
   }
 
   public getEditorOptions(Type, PicklistId, Code): any {
-    if (Type == "dxSelectBox" && Code != 'City')
+    if (Type == "dxSelectBox" )
       return {
         dataSource: this.GetCustomStore(), //JSON.parse(localStorage.getItem(PicklistId)),
         displayExpr: "OrderNumber",
@@ -168,32 +168,12 @@ export class FormComponent implements OnInit {
           this.popupVisible = false;
         },
         onValueChanged: function (e) {
-          var get = this.DataSource;
+         
           window.alert("event fired");
           this.popupVisible = false;
         }
       };
-    if (Type == "dxSelectBox" && Code == 'City')
-      return {
-        dataSource: this.GetCustomStore(),//this.DataSource,
-        displayExpr: "OrderNumber",
-        valueExpr: "ID",
-        searchEnabled: true,
-        onSelectionChanged: function (e) {
-          window.alert("event fired");
-          this.popupVisible = false;
-        },
-        onValueChanged: function (e) {
-          window.alert("event fired");
-          this.popupVisible = false;
-        },
-        // onOpened: function (e) {
-        //   function StateID(element, index, array) {
-        //     return (element.StateID == 1);
-        //   }
-        //   e.component._dataSource._storeLoadOptions.filter = e.component._options.items.filter(StateID)
-        // }
-      };
+   
     if (Type == "dxCheckBox") {
       return {
         disabled: false,
