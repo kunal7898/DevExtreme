@@ -16,6 +16,7 @@ export class CustomDataSourceFormComponent implements OnInit {
 
   ngOnInit() {
     this.formData=this.SetFormData();
+    this.items =this.LoadInnerItems(this.LoadHeaderItems());
   }
 
   private SetFormData(){
@@ -57,16 +58,9 @@ export class CustomDataSourceFormComponent implements OnInit {
       let viewresolver = new CustomFormService();
     
       viewresolver.LoadMetaData().forEach(element => {
-        if(this.FirstgroupCount==1 && element["cssClass"]=="first-group"){
-          Inneritems[0].items.push({
-            dataField:element["code"],
-            editorType:this.getEditorType(element["AttributeType"]),
-            editorOptions:this.getEditorOptions(this.getEditorType(element["AttributeType"]),element["PicklistId"],element["code"]),
-            validationRules: this.getMandatoryFieldsValidation(element["code"],element["IsMandatory"],element["length"],element["IsCustomValidation"],element["validationCallback"]) ,
-          })
-        }
+       
         if(this.SecondGroupCount==1 && element["cssClass"]=="second-group"){
-          Inneritems[1].items.push({
+          Inneritems[0].items.push({
             dataField:element["code"],
             editorType:this.getEditorType(element["AttributeType"]),
             editorOptions:this.getEditorOptions(this.getEditorType(element["AttributeType"]),element["PicklistId"],element["code"]),
