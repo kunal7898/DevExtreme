@@ -2,7 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CustomFormService } from './CustomFromService';
-
+import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
@@ -161,7 +161,7 @@ export class CustomDataSourceFormComponent implements OnInit {
               id: 0,
               text: "user", 
               icon: "user", 
-              content: "User tab content" 
+              content: this.LoadInnerItemsTab(this.LoadHeaderItemsTab())
           },
           { 
               id: 1,
@@ -176,7 +176,12 @@ export class CustomDataSourceFormComponent implements OnInit {
               content: "Find tab content" 
           }
       ],
-      
+      itemTemplate: function(data, _, element) {
+        element.append(
+          $("<div>").text(data.content), $("</div>")
+         ,
+      )
+      }
       };
 
 
@@ -211,6 +216,81 @@ export class CustomDataSourceFormComponent implements OnInit {
       paginate: true,
       pageSize: 10
     });
+  }
+
+
+  public LoadMetaData():Array<object>{
+    let Values =  new Array<object>();
+    Values.push(
+   
+    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+    {code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
+   
+  )
+    return Values;
+  }
+
+  private LoadHeaderItemsTab(): Array<object> {
+
+    let Values =  new Array<object>();
+    Values.push(
+   
+    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+    //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
+   
+  )
+    let Items = Array<object>();
+    Values.forEach(element => {
+      if (element["cssClass"] == "first-group" ) {
+        Items.push({
+          cssClass: element["cssClass"],
+          colCount: element["colCount"],
+          itemType: "group",
+          items: []
+        })
+        this.FirstgroupCount++;
+      }
+      if (element["cssClass"] == "second-group" ) {
+        Items.push({
+          cssClass: element["cssClass"],
+          colCount: element["colCount"],
+          itemType: "group",
+          items: []
+        })
+        this.SecondGroupCount++;
+      }
+    });
+
+    return Items;
+  }
+
+
+
+  private LoadInnerItemsTab(Inneritems: any): Array<object> {
+    let Values =  new Array<object>();
+    Values.push(
+   
+    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+    //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
+   
+  )
+
+    Values.forEach(element => {
+
+      if ( element["cssClass"] == "second-group") {
+        Inneritems[0].items.push({
+          dataField: element["code"],
+          editorType: this.getEditorType(element["AttributeType"]),
+          editorOptions: this.getEditorOptions(this.getEditorType(element["AttributeType"]), element["PicklistId"], element["code"]),
+          validationRules: this.getMandatoryFieldsValidation(element["code"], element["IsMandatory"], element["length"], element["IsCustomValidation"], element["validationCallback"]),
+        })
+      }
+    });
+
+    return Inneritems;
   }
 
 
