@@ -139,7 +139,7 @@ export class CustomTabbedFormComponent implements OnInit {
     obj.getColumns().forEach((eachObj) => {
       var component = this;
          if (eachObj["AttributeType"]=='number'){
-         columns.push({width :100, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
          cellTemplate:function(container, options){
         var  Data=options;
           var dataGrid = options.component;
