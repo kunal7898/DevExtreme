@@ -143,6 +143,15 @@ export class CustomDataSourceFormComponent implements OnInit {
         sorting: {   
             mode: "multiple"
             },
+            cellTemplate:function(container, options){
+              
+              $('<a/>').addClass('dx-link')
+                          .text(options.text)
+                          .click('dxclick', function(){
+                            
+                          })
+                          .appendTo(container);
+           },
         allowColumnReordering: true,
         allowColumnResizeing: true,
         filterRow: {

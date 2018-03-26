@@ -24,7 +24,7 @@ export class CustomTabbedFormComponent implements OnInit {
   ngOnInit() {
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
-    this.tabs = CustomTabbedFormService.LoadTabs();
+    //this.tabs = CustomTabbedFormService.LoadTabs();
   }
 
   private SetFormData() {
@@ -51,33 +51,7 @@ export class CustomTabbedFormComponent implements OnInit {
           cssClass: element["cssClass"],
           colCount: element["colCount"],
           itemType: "group",
-          items: ["name", {
-            itemType: "tabbed",
-            colSpan: 2,
-            tabs: [{
-                title: "Info",
-                // Makes this tab span both general columns
-                colSpan: 2,
-                // Organizes items inside this tab in three columns
-                colCount: 3,
-                items: [
-                  "position", 
-                  "hireDate",
-                   "city", 
-                //dataField: element["code"],
-                {
-                  editorType: 'dxDataGrid',
-                  editorOptions: {
-                      dataSource: [{"OrderNumber":35703,"SaleAmount":11800,"StoreCity":"Las Vegas","StoreState":"Nevada","Employee":"Harv Mudd","OrderDate":"2013/11/12"}],
-                     
-                  }
-              },]
-            }, {
-                title: "Contacts",
-                colCount: 2,
-                items: ["phone", "email"]
-            }]
-        }]
+          items: []
         })
         this.SecondGroupCount++;
       }
@@ -93,27 +67,62 @@ export class CustomTabbedFormComponent implements OnInit {
 
     viewresolver.LoadMetaData().forEach(element => {
 
-      if (this.SecondGroupCount == 1 && element["cssClass"] == "second-group") {
+      if (this.SecondGroupCount == 1 && element["cssClass"] == "second-group" && element["AttributeType"]!="Tab") {
         Inneritems[0].items.push({
-          //dataField: element["code"],
-         // editorType: this.getEditorType(element["AttributeType"]),
-        //   items: ["name", {
-        //     itemType: "tabbed",
-        //     colSpan: 2,
-        //     tabs: [{
-        //         title: "Info",
-        //         // Makes this tab span both general columns
-        //         colSpan: 2,
-        //         // Organizes items inside this tab in three columns
-        //         colCount: 3,
-        //         items: ["position", "hireDate", "city"]
-        //     }, {
-        //         title: "Contacts",
-        //         colCount: 2,
-        //         items: ["phone", "email"]
-        //     }]
-        // }],
+          dataField: element["code"],
+          editorType: this.getEditorType(element["AttributeType"]),
+          editorOptions: this.getEditorOptions(this.getEditorType(element["AttributeType"]), element["PicklistId"], element["code"]),
           validationRules: this.getMandatoryFieldsValidation(element["code"], element["IsMandatory"], element["length"], element["IsCustomValidation"], element["validationCallback"]),
+        })
+      }
+
+      if (this.SecondGroupCount == 1 && element["cssClass"] == "second-group" && element["AttributeType"]=="Tab") {
+        var component = this;
+        Inneritems[0].items.push({
+          itemType: "tabbed",
+            //colSpan: 2,
+            tabs: [{
+                title: "Info",
+                // Makes this tab span both general columns
+               //colSpan: 2,
+                // Organizes items inside this tab in three columns
+                height:"500",
+                //colCount: 3,
+                items: [
+                  
+                {
+                  editorType: 'dxDataGrid',
+                  editorOptions: {
+                      dataSource: this.GetCustomDataSource(),
+                      columns:component.getColumns(),
+                      height:"500",
+                      width:"1000",
+                      remoteOperations:{
+                        paging:true
+                      },
+                      allowColumnReordering: true,
+                      allowColumnResizeing: true,
+                      filterRow: {
+                        visible: true
+                    },
+                    showRowLines: true,
+                    showBorders: true,
+                    allowFiltering:true,
+                    allowSorting:true,
+                    
+                    paging: {
+                      pagesize: 2
+                  },
+                  sorting: {   
+                    mode: "multiple"
+                    },
+                  }
+              },]
+            }, {
+                title: "Contacts",
+                colCount: 2,
+                items: ["phone", "email"]
+            }]
         })
       }
     });
@@ -121,6 +130,44 @@ export class CustomTabbedFormComponent implements OnInit {
     return Inneritems;
   }
 
+ 
+  public  getColumns(){
+    
+    let columns = new Array<object>();
+    let obj = new CustomTabbedFormService();
+    
+    obj.getColumns().forEach((eachObj) => {
+      var component = this;
+         if (eachObj["AttributeType"]=='number'){
+         columns.push({width :100, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+         cellTemplate:function(container, options){
+        var  Data=options;
+          var dataGrid = options.component;
+            $('<a/>').addClass('dx-link')
+                        .text(options.text)
+                        .click('dxclick', function(){
+                          component.RowItemClick(options.data);
+                        })
+                        .appendTo(container);
+         }})
+     }
+         if (eachObj["AttributeType"]=='string'){
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+     }
+     if (eachObj["AttributeType"]=='date'){
+         columns.push({width :50, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],dataType:'date'})
+     }
+ 
+  
+    })
+ 
+    return columns;
+ 
+    }
+
+public RowItemClick(options){
+  window.alert(options)
+  }
 
   public getMandatoryFieldsValidation(Code, IsMandatory, length, IsCustomValidation, validationCallback): any {
     let validationRule = Array<object>();
