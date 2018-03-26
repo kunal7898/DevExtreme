@@ -1,16 +1,19 @@
+
 import { Component, OnInit } from '@angular/core';
-import { CustomFormService } from './CustomFromService';
+
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
+import { CustomTabbedFormService } from './Custom-Tabbed-Service';
 
 @Component({
-  selector: 'app-custom-data-source-form',
-  templateUrl: './custom-data-source-form.component.html',
-  styleUrls: ['./custom-data-source-form.component.css']
+  selector: 'app-custom-tabbed-form',
+  templateUrl: './custom-tabbed-form.component.html',
+  styleUrls: ['./custom-tabbed-form.component.css']
 })
-export class CustomDataSourceFormComponent implements OnInit {
+export class CustomTabbedFormComponent implements OnInit {
+
   FirstgroupCount: number = 0;
   SecondGroupCount: number = 0;
   formData: any;
@@ -21,7 +24,7 @@ export class CustomDataSourceFormComponent implements OnInit {
   ngOnInit() {
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
-    this.tabs = CustomFormService.LoadTabs();
+    this.tabs = CustomTabbedFormService.LoadTabs();
   }
 
   private SetFormData() {
@@ -31,7 +34,7 @@ export class CustomDataSourceFormComponent implements OnInit {
 
   private LoadHeaderItems(): Array<object> {
 
-    let viewresolver = new CustomFormService();
+    let viewresolver = new CustomTabbedFormService();
     let Items = Array<object>();
     viewresolver.LoadMetaData().forEach(element => {
       if (element["cssClass"] == "first-group" && this.FirstgroupCount == 0) {
@@ -48,7 +51,33 @@ export class CustomDataSourceFormComponent implements OnInit {
           cssClass: element["cssClass"],
           colCount: element["colCount"],
           itemType: "group",
-          items: []
+          items: ["name", {
+            itemType: "tabbed",
+            colSpan: 2,
+            tabs: [{
+                title: "Info",
+                // Makes this tab span both general columns
+                colSpan: 2,
+                // Organizes items inside this tab in three columns
+                colCount: 3,
+                items: [
+                  "position", 
+                  "hireDate",
+                   "city", 
+                //dataField: element["code"],
+                {
+                  editorType: 'dxDataGrid',
+                  editorOptions: {
+                      dataSource: [{"OrderNumber":35703,"SaleAmount":11800,"StoreCity":"Las Vegas","StoreState":"Nevada","Employee":"Harv Mudd","OrderDate":"2013/11/12"}],
+                     
+                  }
+              },]
+            }, {
+                title: "Contacts",
+                colCount: 2,
+                items: ["phone", "email"]
+            }]
+        }]
         })
         this.SecondGroupCount++;
       }
@@ -60,15 +89,30 @@ export class CustomDataSourceFormComponent implements OnInit {
 
 
   private LoadInnerItems(Inneritems: any): Array<object> {
-    let viewresolver = new CustomFormService();
+    let viewresolver = new CustomTabbedFormService();
 
     viewresolver.LoadMetaData().forEach(element => {
 
       if (this.SecondGroupCount == 1 && element["cssClass"] == "second-group") {
         Inneritems[0].items.push({
-          dataField: element["code"],
-          editorType: this.getEditorType(element["AttributeType"]),
-          editorOptions: this.getEditorOptions(this.getEditorType(element["AttributeType"]), element["PicklistId"], element["code"]),
+          //dataField: element["code"],
+         // editorType: this.getEditorType(element["AttributeType"]),
+        //   items: ["name", {
+        //     itemType: "tabbed",
+        //     colSpan: 2,
+        //     tabs: [{
+        //         title: "Info",
+        //         // Makes this tab span both general columns
+        //         colSpan: 2,
+        //         // Organizes items inside this tab in three columns
+        //         colCount: 3,
+        //         items: ["position", "hireDate", "city"]
+        //     }, {
+        //         title: "Contacts",
+        //         colCount: 2,
+        //         items: ["phone", "email"]
+        //     }]
+        // }],
           validationRules: this.getMandatoryFieldsValidation(element["code"], element["IsMandatory"], element["length"], element["IsCustomValidation"], element["validationCallback"]),
         })
       }
@@ -107,7 +151,7 @@ export class CustomDataSourceFormComponent implements OnInit {
     if(Attributetype == "DataGrid" )
     return "dxDataGrid";
     if(Attributetype == "Tab" )
-    return "dxTabs";
+    return "dxTabPanel";
     
     else
       return null;
@@ -136,7 +180,7 @@ export class CustomDataSourceFormComponent implements OnInit {
         dataSource: this.GetCustomDataSource(),
         showRowLines: true,
         showBorders: true,
-        height:"500",
+        height:"2",
         paging: {
             pagesize: 2
         },
@@ -154,32 +198,28 @@ export class CustomDataSourceFormComponent implements OnInit {
       };
       if (Type == "dxTabs")
       return {
-        dataSource: [
-          {     
-              id: 0,
-              text: "user", 
-              icon: "user", 
-              content: this.LoadInnerItemsTab(this.LoadHeaderItemsTab())
-          },
-          { 
-              id: 1,
-              text: "comment", 
-              icon: "comment", 
-              content: "Comment tab content" 
-          },
-          { 
-              id: 2,
-              text: "find", 
-              icon: "find", 
-              content: "Find tab content" 
-          }
+        
+              
+            itemType: 'tabbed',
+            tabs: [
+                {
+                    title: 'Data',
+                    items: [{
+                        editorType: 'dxDataGrid',
+                        editorOptions: {
+                            dataSource: null,
+                            columns: [
+                                { dataField: 'name', caption: 'Name', },
+                                { dataField: 'street', caption: 'Street', },
+                            ]
+                        }
+                    }]
+                }
+            
+          ,
+          
       ],
-      itemTemplate: function(data, _, element) {
-        element.append(
-          $("<div>").text(data.content), $("</div>")
-         ,
-      )
-      }
+     
       };
 
 
@@ -290,6 +330,4 @@ export class CustomDataSourceFormComponent implements OnInit {
 
     return Inneritems;
   }
-
-
 }
