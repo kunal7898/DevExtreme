@@ -1,13 +1,33 @@
 
+
+
 <div class="slideout-container" id="slideOutView">
-    <dx-slide-out
+    <dx-slide-out-view
         #slideout
         (onItemClick)="onItemClick($event)"
-        [menuGrouped]="true"
+       
         [(menuVisible)]="menuVisible"
         [swipeEnabled]="true"
-        [items]="Items"
+        menuTemplate= 'menu'
       
     >
-</dx-slide-out>
+    <div *dxTemplate="let menuData of 'menu'" style="height: 100%;">
+        <dx-tree-view
+        #treeview
+        [dataSource]="Items"
+        [(width)]="width"
+        [searchEnabled]="true"
+        searchMode="contains"
+        [(height)]="height"
+        keyExpr="Id"
+        displayExpr="ValueName"
+        parentIdExpr="ParentID"
+        (onItemClick)="selectItem($event)"
+        dataStructure="plain"
+    ></dx-tree-view>
+    </div>
+       
+ 
+   
+</dx-slide-out-view>
 </div>
