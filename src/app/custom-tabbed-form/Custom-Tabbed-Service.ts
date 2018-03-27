@@ -20,4 +20,13 @@ export class CustomTabbedFormService{
         columns.push({code: 'OrderNumber', AttributeType:'number',IscellTemplate:true},{code:'SaleAmount',AttributeType:'string',IscellTemplate:false},{code:'StoreCity',AttributeType:'string',IscellTemplate:false},{code:'Employee',AttributeType:'string',IscellTemplate:false},{code:'OrderDate',AttributeType:'date',IscellTemplate:false});
         return columns;
       }
-}
+
+      getColumnsTree(){
+        let columns = new Array<object>();
+        columns.push({code: 'name', AttributeType:'string',IscellTemplate:true},
+        {code:'size',AttributeType:'string',IscellTemplate:false},
+        {code:'createdDate',AttributeType:'date',IscellTemplate:false},
+        {code:'modifiedDate',AttributeType:'date',IscellTemplate:false});
+        return columns;
+      }
+    }

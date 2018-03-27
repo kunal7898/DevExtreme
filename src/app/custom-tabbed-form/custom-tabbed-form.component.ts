@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
@@ -10,7 +10,8 @@ import { CustomTabbedFormService } from './Custom-Tabbed-Service';
 @Component({
   selector: 'app-custom-tabbed-form',
   templateUrl: './custom-tabbed-form.component.html',
-  styleUrls: ['./custom-tabbed-form.component.css']
+  styleUrls: ['./custom-tabbed-form.component.css'],
+  encapsulation:ViewEncapsulation.None,
 })
 export class CustomTabbedFormComponent implements OnInit {
 
@@ -22,6 +23,8 @@ export class CustomTabbedFormComponent implements OnInit {
   constructor(private http: Http) { }
 
   ngOnInit() {
+    
+
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
     //this.tabs = CustomTabbedFormService.LoadTabs();
@@ -105,6 +108,12 @@ export class CustomTabbedFormComponent implements OnInit {
                       filterRow: {
                         visible: true
                     },
+                    onCellPrepared: function(options) {
+                      if(options.rowType=="data"){
+                       // options.cellElement.innerHTML="<a class='dx-link'>" + options.cellElement.innerHTML +"</a>"
+                      }
+                    
+                    },
                     showRowLines: true,
                     showBorders: true,
                     allowFiltering:true,
@@ -119,9 +128,24 @@ export class CustomTabbedFormComponent implements OnInit {
                   }
               },]
             }, {
-                title: "Contacts",
-                colCount: 2,
-                items: ["phone", "email"]
+                title: "Tree List",
+               
+                items: [   
+                  {
+                    editorType: 'dxTreeList',
+                    editorOptions: {
+                   dataSource: this.GetCustomDataSourceTree(),
+                    remoteOperations: {
+                      filtering: true
+                  },
+                  keyExpr: "id",
+                  parentIdExpr: "parentId",
+                  hasItemsExpr: "hasItems",
+                  rootValue: "",
+                  columns: this.GetTreeColumns()
+                        
+                    }
+                }]
             }]
         })
       }
@@ -152,7 +176,10 @@ export class CustomTabbedFormComponent implements OnInit {
          }})
      }
          if (eachObj["AttributeType"]=='string'){
-         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+       
+        })
+         
      }
      if (eachObj["AttributeType"]=='date'){
          columns.push({width :50, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],dataType:'date'})
@@ -164,6 +191,33 @@ export class CustomTabbedFormComponent implements OnInit {
     return columns;
  
     }
+
+
+public GetTreeColumns(){
+  let columns = new Array<object>();
+    let obj = new CustomTabbedFormService();
+    
+    obj.getColumnsTree().forEach((eachObj) => {
+      var component = this;
+         if (eachObj["AttributeType"]=='number'){
+         columns.push({width :200, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+         })
+     }
+         if (eachObj["AttributeType"]=='string'){
+         columns.push({width :200, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],
+       
+        })
+         
+     }
+     if (eachObj["AttributeType"]=='date'){
+         columns.push({width :200, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],dataType:'date'})
+     }
+ 
+  
+    })
+ 
+    return columns;
+} 
 
 public RowItemClick(options){
   window.alert(options)
@@ -303,7 +357,23 @@ public RowItemClick(options){
     });
   }
 
+ GetCustomDataSourceTree(){
+  var http = this.http;
+  return new DataSource({
+    store: new CustomStore({
+      load: function (loadOptions: any) {
+        return $.ajax({
+          url: "https://js.devexpress.com/Demos/Mvc/api/treeListData",
+          dataType: "json",
+          data: { parentIds: loadOptions.parentIds.join(",") }
+      });
 
+      },
+    }),
+    paginate: true,
+    pageSize: 10
+  });
+ }
   public LoadMetaData():Array<object>{
     let Values =  new Array<object>();
     Values.push(
