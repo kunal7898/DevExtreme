@@ -15,13 +15,17 @@ export class CustomDataSourceFormComponent implements OnInit {
   SecondGroupCount: number = 0;
   formData: any;
   items: any[];
-  tabs :any[];
+  tabs: any[];
+  dataSource : DataSource;
   constructor(private http: Http) { }
 
   ngOnInit() {
+    this.dataSource = this.GetCustomDataSource();
+    this.dataSource.load();
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
     this.tabs = CustomFormService.LoadTabs();
+   
   }
 
   private SetFormData() {
@@ -104,11 +108,11 @@ export class CustomDataSourceFormComponent implements OnInit {
       return "dxCheckBox";
     if (Attributetype == "radiobox")
       return "dxRadioGroup";
-    if(Attributetype == "DataGrid" )
-    return "dxDataGrid";
-    if(Attributetype == "Tab" )
-    return "dxTabs";
-    
+    if (Attributetype == "DataGrid")
+      return "dxDataGrid";
+    if (Attributetype == "Tab")
+      return "dxTabs";
+
     else
       return null;
 
@@ -117,7 +121,7 @@ export class CustomDataSourceFormComponent implements OnInit {
   public getEditorOptions(Type, PicklistId, Code): any {
     if (Type == "dxSelectBox")
       return {
-        dataSource: this.GetCustomDataSource(), //JSON.parse(localStorage.getItem(PicklistId)),
+        dataSource: this.dataSource, //JSON.parse(localStorage.getItem(PicklistId)),
         displayExpr: "OrderNumber",
         // valueExpr: "ID",
         searchEnabled: true,
@@ -131,64 +135,64 @@ export class CustomDataSourceFormComponent implements OnInit {
           this.popupVisible = false;
         }
       };
-      if (Type == "dxDataGrid")
+    if (Type == "dxDataGrid")
       return {
         dataSource: this.GetCustomDataSource(),
         showRowLines: true,
         showBorders: true,
-        height:"500",
+        height: "500",
         paging: {
-            pagesize: 2
+          pagesize: 2
         },
-        sorting: {   
-            mode: "multiple"
-            },
-            cellTemplate:function(container, options){
-              
-              $('<a/>').addClass('dx-link')
-                          .text(options.text)
-                          .click('dxclick', function(){
-                            
-                          })
-                          .appendTo(container);
-           },
+        sorting: {
+          mode: "multiple"
+        },
+        cellTemplate: function (container, options) {
+
+          $('<a/>').addClass('dx-link')
+            .text(options.text)
+            .click('dxclick', function () {
+
+            })
+            .appendTo(container);
+        },
         allowColumnReordering: true,
         allowColumnResizeing: true,
         filterRow: {
-            visible: true
+          visible: true
         },
-        remoteOperations:{
-          paging:true
+        remoteOperations: {
+          paging: true
         }
       };
-      if (Type == "dxTabs")
+    if (Type == "dxTabs")
       return {
         dataSource: [
-          {     
-              id: 0,
-              text: "user", 
-              icon: "user", 
-              content: this.LoadInnerItemsTab(this.LoadHeaderItemsTab())
+          {
+            id: 0,
+            text: "user",
+            icon: "user",
+            content: this.LoadInnerItemsTab(this.LoadHeaderItemsTab())
           },
-          { 
-              id: 1,
-              text: "comment", 
-              icon: "comment", 
-              content: "Comment tab content" 
+          {
+            id: 1,
+            text: "comment",
+            icon: "comment",
+            content: "Comment tab content"
           },
-          { 
-              id: 2,
-              text: "find", 
-              icon: "find", 
-              content: "Find tab content" 
+          {
+            id: 2,
+            text: "find",
+            icon: "find",
+            content: "Find tab content"
           }
-      ],
-      itemTemplate: function(data, _, element) {
-        element.append(
-          $("<div>").text(data.content), $("</div>")
-         ,
-      )
-      }
+        ],
+        itemTemplate: function (data, _, element) {
+          element.append(
+            $("<div>").text(data.content), $("</div>")
+            ,
+          )
+        }
       };
 
 
@@ -213,7 +217,7 @@ export class CustomDataSourceFormComponent implements OnInit {
               var json = response.json();
               console.log(json.items);
               return {
-                totalCount:json.totalCount,
+                totalCount: json.totalCount,
                 data: json.items
               };
             });
@@ -226,31 +230,55 @@ export class CustomDataSourceFormComponent implements OnInit {
   }
 
 
-  public LoadMetaData():Array<object>{
-    let Values =  new Array<object>();
+  GetCustomDataSourceSample() {
+    var http = this.http;
+    return new CustomStore({
+      load: function (loadOptions: any) {
+        var params = '?';
+
+        params += 'skip=' + loadOptions.skip || 0;
+        params += '&take=' + loadOptions.take || 10;
+
+        return http.get('https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems' + params)
+          .toPromise()
+          .then(response => {
+            var json = response.json();
+            console.log(json.items);
+            return {
+              totalCount: json.totalCount,
+              data: json.items
+            };
+          });
+      },
+    });
+  }
+
+
+  public LoadMetaData(): Array<object> {
+    let Values = new Array<object>();
     Values.push(
-   
-    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-    {code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
-   
-  )
+
+      { code: 'State', Name: 'State', AttributeType: 'lookup', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null },
+      // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+      { code: 'Tabs', Name: 'Tab', AttributeType: 'Tab', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null }
+
+    )
     return Values;
   }
 
   private LoadHeaderItemsTab(): Array<object> {
 
-    let Values =  new Array<object>();
+    let Values = new Array<object>();
     Values.push(
-   
-    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-    //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
-   
-  )
+
+      { code: 'State', Name: 'State', AttributeType: 'lookup', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null },
+      // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+      //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
+
+    )
     let Items = Array<object>();
     Values.forEach(element => {
-      if (element["cssClass"] == "first-group" ) {
+      if (element["cssClass"] == "first-group") {
         Items.push({
           cssClass: element["cssClass"],
           colCount: element["colCount"],
@@ -259,7 +287,7 @@ export class CustomDataSourceFormComponent implements OnInit {
         })
         this.FirstgroupCount++;
       }
-      if (element["cssClass"] == "second-group" ) {
+      if (element["cssClass"] == "second-group") {
         Items.push({
           cssClass: element["cssClass"],
           colCount: element["colCount"],
@@ -276,18 +304,18 @@ export class CustomDataSourceFormComponent implements OnInit {
 
 
   private LoadInnerItemsTab(Inneritems: any): Array<object> {
-    let Values =  new Array<object>();
+    let Values = new Array<object>();
     Values.push(
-   
-    {code:'State',Name:'State',AttributeType:'lookup',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-   // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-    //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
-   
-  )
+
+      { code: 'State', Name: 'State', AttributeType: 'lookup', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null },
+      // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
+      //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
+
+    )
 
     Values.forEach(element => {
 
-      if ( element["cssClass"] == "second-group") {
+      if (element["cssClass"] == "second-group") {
         Inneritems[0].items.push({
           dataField: element["code"],
           editorType: this.getEditorType(element["AttributeType"]),
