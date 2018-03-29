@@ -20,7 +20,7 @@ export class CustomDropDownComponent implements OnInit, AfterViewInit {
   DropDownBoxData: any = {};
   _gridBoxValue: number = 3;
   _gridSelectedRowKeys: number[] = [3];
-
+  isOpened = false;
 
   _gridBoxValueCustom: number; 
   _gridSelectedRowKeysCustom: number[];
@@ -160,12 +160,14 @@ export class CustomDropDownComponent implements OnInit, AfterViewInit {
   }
 
   get gridSelectedRowKeysCustom(): number[] {
+  
     return this._gridSelectedRowKeysCustom;
   }
 
   set gridSelectedRowKeysCustom(value: number[]) {
     this._gridBoxValueCustom = value.length && value[0] || null;
     this._gridSelectedRowKeysCustom = value;
+    this.isOpened=false;
   }
 
   gridBox_displayExprCustom(item) {

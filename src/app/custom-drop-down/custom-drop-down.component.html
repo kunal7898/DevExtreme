@@ -37,6 +37,7 @@
                     placeholder="Select a value..."
                     [showClearButton]="true"
                     [dataSource]="gridCustomDataSource"
+                    [(opened)]="isOpened"
             >
                 <div *dxTemplate="let data of 'content'">
                     <dx-data-grid
