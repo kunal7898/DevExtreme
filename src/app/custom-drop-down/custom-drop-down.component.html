@@ -1,11 +1,14 @@
-<dx-drop-down-box
+<div class="dx-fieldset">
+    <div class="dx-field">
+        <div class="dx-field-label">DropDownBox with embedded DataGrid</div>
+        <div class="dx-field-value">
+            <dx-drop-down-box
                     [(value)]="gridBoxValue"
-                    valueExpr="ID"
                     [displayExpr]="gridBox_displayExpr"
                     placeholder="Select a value..."
                     [showClearButton]="true"
                     [dataSource]="gridDataSource"
-            >
+                    >
 
                 <div *dxTemplate="let data of 'content'">
                     <dx-data-grid
@@ -22,3 +25,37 @@
                     </dx-data-grid>
                 </div>
             </dx-drop-down-box>
+        </div>
+    </div>
+
+    <div class="dx-field">
+        <div class="dx-field-label">DropDownBox with Custom DataSource DataGrid</div>
+        <div class="dx-field-value">
+            <dx-drop-down-box 
+                    [(value)]="_gridBoxValueCustom"
+                    [displayExpr]="gridBox_displayExprCustom"
+                    placeholder="Select a value..."
+                    [showClearButton]="true"
+                    [dataSource]="gridCustomDataSource"
+            >
+                <div *dxTemplate="let data of 'content'">
+                    <dx-data-grid
+                            [dataSource]="gridCustomDataSource"
+                            [columns]="['OrderNumber', 'StoreCity', 'StoreState']"
+                            [selection]="{ mode: 'single' }"
+                            [hoverStateEnabled]="true"
+                            [paging]="{ enabled: true, pageSize: 10 }"
+                            [filterRow]="{ visible: true }"
+                            [scrolling]="{ mode: 'infinite' }"
+                            [height]="265"
+                            [remoteOperations]="{paging:true}"
+                            [(selectedRowKeys)]="gridSelectedRowKeysCustom"
+                    >
+                    </dx-data-grid>
+                </div>
+            </dx-drop-down-box>
+        </div>
+    </div>
+</div>
+
+
