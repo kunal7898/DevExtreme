@@ -37,4 +37,15 @@ export class CustomFormService{
 
         return  tabs;
       }
+
+      getColumns(){
+        let columns = new Array<object>();
+        columns.push({code: 'OrderNumber', AttributeType:'number',IscellTemplate:true,PicklistMasterId:null},
+        {code:'SaleAmount',AttributeType:'number',IscellTemplate:false,PicklistMasterId:null},
+        {code:'StoreCity',AttributeType:'Lookup',IscellTemplate:false,PicklistMasterId:5},
+        {code:'StoreState',AttributeType:'string',IscellTemplate:false,PicklistMasterId:null},
+        {code:'OrderDate',AttributeType:'date',IscellTemplate:false,PicklistMasterId:null},
+        {code:'Employee',AttributeType:'string',PicklistMasterId:null,IscellTemplate:false});
+        return columns;
+      }
 }

@@ -10,6 +10,33 @@ export class DataSourceService {
   public static loadDataSource(){
     // logic for getting the data from service
     
+    localStorage.setItem('5', JSON.stringify( [ 
+        {
+          "ID": 1,
+          "Name":"Las Vegas",
+        },
+        {
+          "ID": 2,
+          "Name":"San Jose",
+        },
+        {
+          "ID": 3,
+          "Name":"Denver",
+        },
+        {
+          "ID": 4,
+          "Name":"Seattle",
+        },
+        {
+          "ID": 5,
+          "Name":"Salt Lake City",
+        },
+        {
+          "ID": 6,
+          "Name":"San Diego",
+        },
+      ]));
+
     localStorage.setItem('1', JSON.stringify( [{
     "ID": 1,
     "Name": "Alabama"
@@ -136,6 +163,9 @@ export class DataSourceService {
 
   localStorage.setItem('4', JSON.stringify( ["Male", "Female"]));
     
+
+ 
+
   }
 
 }

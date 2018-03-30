@@ -18,10 +18,11 @@ export class CustomDataSourceFormComponent implements OnInit {
   tabs: any[];
   dataSource : DataSource;
   constructor(private http: Http) { }
-
+  first : boolean=true;
   ngOnInit() {
     this.dataSource = this.GetCustomDataSource();
     this.dataSource.load();
+    
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
     this.tabs = CustomFormService.LoadTabs();
@@ -81,6 +82,37 @@ export class CustomDataSourceFormComponent implements OnInit {
     return Inneritems;
   }
 
+  public  getColumns(){
+    
+    let columns = new Array<object>();
+    let obj = new CustomFormService();
+    
+    obj.getColumns().forEach((eachObj) => {
+        
+         if (eachObj["AttributeType"]=='number'){
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+     }
+         if (eachObj["AttributeType"]=='string'){
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"]})
+     }
+     if (eachObj["AttributeType"]=='date'){
+         columns.push({width :150, allowFiltering:true,allowSorting:true,dataField:eachObj["code"],caption:eachObj["code"],dataType:'date'})
+     }
+ 
+     if(eachObj["AttributeType"]=='Lookup'){
+         let tempData = JSON.parse(localStorage.getItem(eachObj["PicklistMasterId"]));  
+         columns.push({width :150, allowFiltering:true,allowSorting:true, lookup: {
+             dataSource:tempData,
+             valueExpr: "Name",
+             displayExpr: "Name"
+         },dataField:eachObj["code"],caption:eachObj["code"]});
+         
+     }
+    })
+ 
+    return columns;
+ 
+    }
 
   public getMandatoryFieldsValidation(Code, IsMandatory, length, IsCustomValidation, validationCallback): any {
     let validationRule = Array<object>();
@@ -136,17 +168,34 @@ export class CustomDataSourceFormComponent implements OnInit {
         }
       };
     if (Type == "dxDataGrid")
+    var componentvalue = this;
       return {
-        dataSource: this.GetCustomDataSource(),
+        dataSource: this.dataSource ,
+        columns:this.getColumns(),
         showRowLines: true,
         showBorders: true,
         height: "500",
+        width:"auto",
         paging: {
           pagesize: 2
         },
         sorting: {
           mode: "multiple"
         },
+        editing: {
+          mode: "cell",
+          allowUpdating: true,
+          allowDeleting: true,
+          allowAdding: true
+      },
+      onContentReady: function (e) {
+        if(componentvalue.first){
+          componentvalue.first= false;
+          e.component.addRow();    
+        }
+        
+       
+    },
         cellTemplate: function (container, options) {
 
           $('<a/>').addClass('dx-link')
@@ -202,8 +251,14 @@ export class CustomDataSourceFormComponent implements OnInit {
 
   GetCustomDataSource() {
     var http = this.http;
+    var ComponentRef = this;
     return new DataSource({
-      store: new CustomStore({
+      
+      store: new CustomStore(
+        {
+          
+        key:"OrderNumber",
+      
         load: function (loadOptions: any) {
 
           var params = '?';
@@ -221,7 +276,15 @@ export class CustomDataSourceFormComponent implements OnInit {
                 data: json.items
               };
             });
-
+          
+        }, 
+        update: function(key,value) {
+        
+         return null;
+        },insert:function(values){
+          return http.post("https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems", values)
+          .toPromise();
+       
         },
       }),
       paginate: true,
