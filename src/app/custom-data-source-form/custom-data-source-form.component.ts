@@ -167,8 +167,8 @@ export class CustomDataSourceFormComponent implements OnInit {
           this.popupVisible = false;
         }
       };
-    if (Type == "dxDataGrid")
-    var componentvalue = this;
+    if (Type == "dxDataGrid"){
+      var componentvalue = this;
       return {
         dataSource: this.dataSource ,
         columns:this.getColumns(),
@@ -213,7 +213,9 @@ export class CustomDataSourceFormComponent implements OnInit {
         remoteOperations: {
           paging: true
         }
-      };
+      }
+    }
+    
     if (Type == "dxTabs")
       return {
         dataSource: [
@@ -279,12 +281,14 @@ export class CustomDataSourceFormComponent implements OnInit {
           
         }, 
         update: function(key,value) {
-        
-         return null;
+          // return http.put("https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems" + encodeURIComponent(key), value)
+          // .toPromise();
+          return null;
+         
         },insert:function(values){
-          return http.post("https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems", values)
-          .toPromise();
-       
+          // return http.post("https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems", values)
+          // .toPromise();
+          return null;
         },
       }),
       paginate: true,
