@@ -60,7 +60,7 @@ export class DataGridComponent implements OnInit,OnChanges  {
   columns=[];
 
   constructor(private Datagridservice:DataGridService,private _cfr: ComponentFactoryResolver) { 
-    DataSourceService.loadDataSource();
+   // DataSourceService.loadDataSource();
     this.employees = Datagridservice.getEmployees();
     this.columns=GridColumns.getColumns();
     this.showLoadPanel(true);

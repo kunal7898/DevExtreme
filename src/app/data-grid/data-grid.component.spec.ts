@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA  } from '@angular/core';
 import { DataGridComponent } from './data-grid.component';
-import { DevExtremeModule } from '../../../DevExtreme/node_modules/devextreme-angular';
+import { DevExtremeModule } from 'devextreme-angular';
 
 xdescribe('DataGridComponent', () => {
   let component: DataGridComponent;

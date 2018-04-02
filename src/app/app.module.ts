@@ -30,6 +30,7 @@ import { TabedDataGridComponent } from './tabed-data-grid/tabed-data-grid.compon
 import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.component';
 import { CustomDataSourceFormComponent } from './custom-data-source-form/custom-data-source-form.component';
 import { CustomTabbedFormComponent } from './custom-tabbed-form/custom-tabbed-form.component';
+import { DataSourceService } from './data-source.service';
 
 
 
@@ -95,4 +96,10 @@ import { CustomTabbedFormComponent } from './custom-tabbed-form/custom-tabbed-fo
 })
 
 
-export class AppModule { }
+export class AppModule {
+
+  constructor(){
+    DataSourceService.loadDataSource();
+  }
+
+ }
