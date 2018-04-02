@@ -8,7 +8,24 @@
     [dataSource]="dataSource"
     [swipeEnabled]="true"
     >
- 
+    <div data-options="dxTemplate: { name: 'treeView' }">
+        <div id="treeView">
+            <dx-tree-view
+    #treeview
+    [dataSource]="Items"
+    [(width)]="width"
+    [searchEnabled]="true"
+    searchMode="contains"
+    [(height)]="height"
+    keyExpr="Id"
+    displayExpr="ValueName"
+    parentIdExpr="ParentID"
+    (onItemClick)="selectItem($event)"
+    dataStructure="plain"
+></dx-tree-view>
+        </div>
+    </div>
+
     </dx-slide-out>
 
    

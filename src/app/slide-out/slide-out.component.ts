@@ -2,6 +2,7 @@ import { Component, OnInit,Output,EventEmitter,Input } from '@angular/core';
 import { CustomerService } from '../Services/customer.service';
 import {DevExtremeModule} from 'devextreme-angular';
 import { CustomerComponent } from '../customer/customer.component';
+import { TreeViewService } from '../tree-view/Tree-view.service';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { CustomerComponent } from '../customer/customer.component';
 })
 export class SlideOutComponent implements OnInit {
   @Output() ItemClickEvent: EventEmitter<any> = new EventEmitter();
-  
+  height :number = 500;
+  Items :Array<object> = null;
   @Input() sideBar: CustomerComponent;
   dataSource : any [];
   menuVisible: boolean=false;
@@ -24,10 +26,32 @@ export class SlideOutComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.Items= this.CreateTreeView(TreeViewService.GetTreeDataFromService());
 this.menuVisible = true;
 this.formData =  this.SetFormData();
   }
+
+  public CreateTreeView(Value){
+  
+    let TreeValue = Array<object>();
+    
+    if(Value==null)
+      return;
+      
+      //https://js.devexpress.com/Documentation/Guide/Themes/Icon_Library/
+  
+      Value.forEach(element => {
+         TreeValue.push({
+            Id:element["ID"],
+            ValueName:element["text"],
+            icon: element["ParentID"]==0?'folder':'doc',
+            ParentID: element["ParentID"] ,
+          })
+  
+      });
+  
+     return TreeValue;
+    }
 
   public SetMenuVisible(value:boolean){
     this.menuVisible=value;
