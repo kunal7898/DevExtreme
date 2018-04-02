@@ -4,13 +4,16 @@
 <div class="slideout-container" id="slideOutView">
     <dx-slide-out-view
         #slideout
-        (onItemClick)="onItemClick($event)"
         [(menuVisible)]="menuVisible"
         [swipeEnabled]="true"
-        menuTemplate= 'menu'
       
     >
+    <div *dxTemplate="let menuData of 'content'" style="height: 100%;">
+            <dx-toolbar [dataSource]="toolbarItems">
+                </dx-toolbar>
+            </div>
     <div *dxTemplate="let menuData of 'menu'" style="height: 100%;">
+ 
         <dx-tree-view
         #treeview
         [dataSource]="Items"
@@ -24,9 +27,9 @@
         (onItemClick)="selectItem($event)"
         dataStructure="plain"
     ></dx-tree-view>
+
     </div>
        
- 
    
 </dx-slide-out-view>
 </div>
