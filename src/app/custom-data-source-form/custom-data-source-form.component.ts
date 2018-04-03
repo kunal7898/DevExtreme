@@ -17,15 +17,18 @@ export class CustomDataSourceFormComponent implements OnInit {
   items: any[];
   tabs: any[];
   dataSource : DataSource;
-  constructor(private http: Http) { }
-  first : boolean=true;
-  ngOnInit() {
+  gridControl:any;
+  constructor(private http: Http) { 
     this.dataSource = this.GetCustomDataSource();
     this.dataSource.load();
     
     this.formData = this.SetFormData();
     this.items = this.LoadInnerItems(this.LoadHeaderItems());
     this.tabs = CustomFormService.LoadTabs();
+  }
+  first : boolean=true;
+  ngOnInit() {
+    
    
   }
 
@@ -142,6 +145,8 @@ export class CustomDataSourceFormComponent implements OnInit {
       return "dxRadioGroup";
     if (Attributetype == "DataGrid")
       return "dxDataGrid";
+      if (Attributetype == "SaveButton")
+      return "dxButton";
     if (Attributetype == "Tab")
       return "dxTabs";
 
@@ -167,34 +172,74 @@ export class CustomDataSourceFormComponent implements OnInit {
           this.popupVisible = false;
         }
       };
+      if(Type=="dxButton"){
+        var componentRef = this;
+        return {
+          text: 'Save Data',
+        onClick:function(e){
+          componentRef.SaveFormData(e);
+        }
+        };
+      }
     if (Type == "dxDataGrid"){
       var componentvalue = this;
       return {
         dataSource: this.dataSource ,
         columns:this.getColumns(),
+        cacheEnabled:true,
         showRowLines: true,
         showBorders: true,
         height: "500",
-        width:"auto",
-        paging: {
-          pagesize: 2
-        },
+        width:"100%",
         sorting: {
           mode: "multiple"
         },
         editing: {
-          mode: "cell",
+          mode: "batch",
           allowUpdating: true,
           allowDeleting: true,
           allowAdding: true
       },
       onContentReady: function (e) {
+         componentvalue.gridControl =  e.component;
         if(componentvalue.first){
           componentvalue.first= false;
-          e.component.addRow();    
+           e.component.addRow();  
+          // componentvalue.dataSource.items().unshift({
+          //   "OrderNumber":"",
+          //   "SaleAmount":"",
+          //   "StoreCity":"",
+          //   "StoreState":"",
+          //   "OrderDate":"",
+          //   "Employee":""
+          // }) ;
+         
         }
-        
-       
+       },
+       onEditorPreparing:function(options,items){
+         
+        //  var Currentoptions= options;
+        //      options.editorOptions.onValueChanged = function(e,rowIndex){
+        //        Currentoptions.setValue(e.value);
+        //        var DataSource =  componentvalue.dataSource.items();
+        //        DataSource[ e.element.parentElement.parentElement.parentElement.rowIndex]=Currentoptions.row.data;
+        //        DataSource[ e.element.parentElement.parentElement.parentElement.rowIndex].IsDirty= true;
+               
+        //     }
+       },
+       onToolbarPreparing: function (e) {
+        var toolbarItems = e.toolbarOptions.items;
+        // Modifies an existing item
+        toolbarItems.forEach((element, index) => {
+          if(element.name=="addRowButton"){
+            element.options.type="success";
+            element.options.icon=null;
+            element.showText="always";
+          } else{
+            element.visible=false;
+          }
+      });
+      
     },
         cellTemplate: function (container, options) {
 
@@ -216,40 +261,30 @@ export class CustomDataSourceFormComponent implements OnInit {
       }
     }
     
-    if (Type == "dxTabs")
-      return {
-        dataSource: [
-          {
-            id: 0,
-            text: "user",
-            icon: "user",
-            content: this.LoadInnerItemsTab(this.LoadHeaderItemsTab())
-          },
-          {
-            id: 1,
-            text: "comment",
-            icon: "comment",
-            content: "Comment tab content"
-          },
-          {
-            id: 2,
-            text: "find",
-            icon: "find",
-            content: "Find tab content"
-          }
-        ],
-        itemTemplate: function (data, _, element) {
-          element.append(
-            $("<div>").text(data.content), $("</div>")
-            ,
-          )
-        }
-      };
-
-
+   
     else
       return null;
   }
+
+
+SaveFormData(e){
+  var rows = this.gridControl.getController('editing')._editData; 
+  if (this.gridControl.hasEditData())
+  var rows = this.gridControl.getController('editing')._editData;
+  for (var i = 0; i < rows.length; i++) {
+  console.log(rows);
+}
+
+
+
+// if (editData[i].type === 'update') {
+// rowCount++;
+// }
+}
+
+// this.gridControl.saveEditData().done(function (data) {
+// console.log(data);
+// }); 
 
   GetCustomDataSource() {
     var http = this.http;
@@ -333,67 +368,9 @@ export class CustomDataSourceFormComponent implements OnInit {
     return Values;
   }
 
-  private LoadHeaderItemsTab(): Array<object> {
-
-    let Values = new Array<object>();
-    Values.push(
-
-      { code: 'State', Name: 'State', AttributeType: 'lookup', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null },
-      // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-      //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
-
-    )
-    let Items = Array<object>();
-    Values.forEach(element => {
-      if (element["cssClass"] == "first-group") {
-        Items.push({
-          cssClass: element["cssClass"],
-          colCount: element["colCount"],
-          itemType: "group",
-          items: []
-        })
-        this.FirstgroupCount++;
-      }
-      if (element["cssClass"] == "second-group") {
-        Items.push({
-          cssClass: element["cssClass"],
-          colCount: element["colCount"],
-          itemType: "group",
-          items: []
-        })
-        this.SecondGroupCount++;
-      }
-    });
-
-    return Items;
-  }
+ 
 
 
-
-  private LoadInnerItemsTab(Inneritems: any): Array<object> {
-    let Values = new Array<object>();
-    Values.push(
-
-      { code: 'State', Name: 'State', AttributeType: 'lookup', PicklistId: 1, IsMandatory: true, cssClass: "second-group", colCount: null, length: null, IsCustomValidation: false, validationCallback: null },
-      // {code:'Grid',Name:'Grid',AttributeType:'DataGrid',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null},
-      //{code:'Tabs',Name:'Tab',AttributeType:'Tab',PicklistId:1,IsMandatory:true, cssClass: "second-group",colCount: null,length:null,IsCustomValidation:false,validationCallback:null}
-
-    )
-
-    Values.forEach(element => {
-
-      if (element["cssClass"] == "second-group") {
-        Inneritems[0].items.push({
-          dataField: element["code"],
-          editorType: this.getEditorType(element["AttributeType"]),
-          editorOptions: this.getEditorOptions(this.getEditorType(element["AttributeType"]), element["PicklistId"], element["code"]),
-          validationRules: this.getMandatoryFieldsValidation(element["code"], element["IsMandatory"], element["length"], element["IsCustomValidation"], element["validationCallback"]),
-        })
-      }
-    });
-
-    return Inneritems;
-  }
 
 
 }

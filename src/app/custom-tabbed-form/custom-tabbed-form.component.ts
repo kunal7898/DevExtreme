@@ -85,7 +85,7 @@ export class CustomTabbedFormComponent implements OnInit {
           itemType: "tabbed",
             //colSpan: 2,
             tabs: [{
-                title: "Info",
+                title: "Data Grid",
                 // Makes this tab span both general columns
                //colSpan: 2,
                 // Organizes items inside this tab in three columns
