@@ -141,7 +141,7 @@ export class CustomDataSourceFormComponent implements OnInit {
         });
       }
     });
-  return columns;
+    return columns;
   }
 
   public getMandatoryFieldsValidation(
@@ -221,21 +221,19 @@ export class CustomDataSourceFormComponent implements OnInit {
           allowAdding: true
         },
         onContentReady: function(e) {
-         var get = e;
+          var get = e;
         },
-        onEditorPreparing: function(options, items) {
+        onEditorPreparing: function(options) {
           var CurrentOptions = options;
-          options.editorOptions.onValueChanged = function(e, rowIndex) {
+          options.editorOptions.onValueChanged = function(e) {
             CurrentOptions.setValue(e.value);
             if (
-              e.element.parentElement.parentElement.parentElement.rowIndex >
-                CurrentOptions.component._controllers.data._items.length - 2 &&
+              CurrentOptions.row.rowIndex >
+                CurrentOptions.component.getController("data")._items.length -
+                  2 &&
               CurrentOptions.index == CurrentOptions.component.columnCount() - 1
             ) {
-              CurrentOptions.component.addRow(CurrentOptions.component._controllers.data._items[CurrentOptions.component._controllers.data._items.length-1].key);
-             
-              //  var CurrentAddedRow = CurrentOptions.component._controllers.data._items.shift();
-              //  CurrentOptions.component._controllers.data._items.push(CurrentAddedRow);
+              CurrentOptions.component.addRow(CurrentOptions.row.key);
             }
           };
         },
@@ -252,7 +250,7 @@ export class CustomDataSourceFormComponent implements OnInit {
             }
           });
         },
-       
+
         allowColumnReordering: true,
         allowColumnResizeing: true,
         filterRow: {
