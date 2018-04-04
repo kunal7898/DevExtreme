@@ -31,6 +31,7 @@ import { CustomDropDownComponent } from './custom-drop-down/custom-drop-down.com
 import { CustomDataSourceFormComponent } from './custom-data-source-form/custom-data-source-form.component';
 import { CustomTabbedFormComponent } from './custom-tabbed-form/custom-tabbed-form.component';
 import { DataSourceService } from './data-source.service';
+import { CascadinglookupsComponent } from './cascadinglookups/cascadinglookups.component';
 
 
 
@@ -59,6 +60,7 @@ import { DataSourceService } from './data-source.service';
     CustomDropDownComponent,
     CustomDataSourceFormComponent,
     CustomTabbedFormComponent,
+    CascadinglookupsComponent,
 
   ],
   imports: [
@@ -80,6 +82,7 @@ import { DataSourceService } from './data-source.service';
       {path:'TabedDatagrid',component:TabedDataGridComponent},
       {path:'CustomdatasourceForm',component:CustomDataSourceFormComponent},
       {path:'CustomDropDown',component:CustomDropDownComponent},
+      {path:'CascadingLookups',component:CascadinglookupsComponent},
 
       {path:'CustomerForm',component:CustomerComponent,
       children: [
