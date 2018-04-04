@@ -141,8 +141,7 @@ export class CustomDataSourceFormComponent implements OnInit {
         });
       }
     });
-
-    return columns;
+  return columns;
   }
 
   public getMandatoryFieldsValidation(
@@ -222,11 +221,7 @@ export class CustomDataSourceFormComponent implements OnInit {
           allowAdding: true
         },
         onContentReady: function(e) {
-          componentvalue.gridControl = e.component;
-          if (componentvalue.first) {
-            componentvalue.first = false;
-            // e.component.addRow();
-          }
+         var get = e;
         },
         onEditorPreparing: function(options, items) {
           var CurrentOptions = options;
@@ -237,7 +232,7 @@ export class CustomDataSourceFormComponent implements OnInit {
                 CurrentOptions.component._controllers.data._items.length - 2 &&
               CurrentOptions.index == CurrentOptions.component.columnCount() - 1
             ) {
-              CurrentOptions.component.addRow(CurrentOptions.component._controllers.data._items[CurrentOptions.component._controllers.data._items.length-1].data.OrderNumber);
+              CurrentOptions.component.addRow(CurrentOptions.component._controllers.data._items[CurrentOptions.component._controllers.data._items.length-1].key);
              
               //  var CurrentAddedRow = CurrentOptions.component._controllers.data._items.shift();
               //  CurrentOptions.component._controllers.data._items.push(CurrentAddedRow);
@@ -257,13 +252,7 @@ export class CustomDataSourceFormComponent implements OnInit {
             }
           });
         },
-        cellTemplate: function(container, options) {
-          $("<a/>")
-            .addClass("dx-link")
-            .text(options.text)
-            .click("dxclick", function() {})
-            .appendTo(container);
-        },
+       
         allowColumnReordering: true,
         allowColumnResizeing: true,
         filterRow: {
@@ -306,7 +295,7 @@ export class CustomDataSourceFormComponent implements OnInit {
             .toPromise()
             .then(response => {
               var json = response.json();
-              json.items.push({ OrderNumber: 123 });
+              json.items.push({ OrderNumber: "" });
               console.log(json.items);
               return {
                 totalCount: json.totalCount,
