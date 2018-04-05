@@ -1,4 +1,7 @@
+
 export  class CascadingFormService {
+
+    constructor() { }
     public LoadMetaData():Array<object>{
         let Values =  new Array<object>();
         Values.push(
@@ -9,14 +12,22 @@ export  class CascadingFormService {
 
       getColumns(){
         let columns = new Array<object>();
-        columns.push({code: 'OrderNumber', AttributeType:'number',IscellTemplate:true,PicklistMasterId:null,MasterId:null},
-        {code:'SaleAmount',AttributeType:'number',IscellTemplate:false,PicklistMasterId:null,MasterId:null},
-        {code:'CityID',AttributeType:'Lookup',IscellTemplate:false,PicklistMasterId:3,MasterId:1},
-        {code:'StateID',AttributeType:'Lookup',IscellTemplate:false,PicklistMasterId:1,MasterId:null},
-        {code:'OrderDate',AttributeType:'date',IscellTemplate:false,PicklistMasterId:null,MasterId:null},
-        {code:'Employee',AttributeType:'string',PicklistMasterId:null,IscellTemplate:false,MasterId:null});
+        columns.push({code: 'OrderNumber', AttributeType:'number',IscellTemplate:true,PicklistMasterId:null,MasterId:null,ParentRelation:null,IsMandatory:true,IsCustomValidation:true,validationCallback:'Length'},
+        {code:'SaleAmount',AttributeType:'number',IscellTemplate:false,PicklistMasterId:null,MasterId:null,ParentRelation:null,IsMandatory:true,IsCustomValidation:false,validationCallback:null},
+        {code:'StateID',AttributeType:'Lookup',IscellTemplate:false,PicklistMasterId:1,MasterId:null,ParentRelation:null,IsMandatory:false,IsCustomValidation:false,validationCallback:null},
+        {code:'CityID',AttributeType:'Lookup',IscellTemplate:false,PicklistMasterId:3,MasterId:1,ParentRelation :'StateID',IsMandatory:true,IsCustomValidation:false,validationCallback:null},
+        {code:'OrderDate',AttributeType:'date',IscellTemplate:false,PicklistMasterId:null,MasterId:null,ParentRelation:null,IsMandatory:false,IsCustomValidation:false,validationCallback:null},
+        {code:'Employee',AttributeType:'string',PicklistMasterId:null,IscellTemplate:false,MasterId:null,ParentRelation:null,IsMandatory:true,IsCustomValidation:false,validationCallback:null});
         return columns;
       }
+
+
+ static AsyncvalidationService(value){
+    
+    return null;
+}
+
+
 
  static  getMetaData(){
           return  [

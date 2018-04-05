@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CascadingFormService } from "./CascadingFormService";
+import { ValidationErrors } from "@angular/forms";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: "app-cascadinglookups",
@@ -68,7 +70,6 @@ export class CascadinglookupsComponent implements OnInit {
           validationRules: this.getMandatoryFieldsValidation(
             element["code"],
             element["IsMandatory"],
-            element["length"],
             element["IsCustomValidation"],
             element["validationCallback"]
           )
@@ -129,6 +130,7 @@ export class CascadinglookupsComponent implements OnInit {
             }
           };
         },
+
         onToolbarPreparing: function(e) {
           var toolbarItems = e.toolbarOptions.items;
           // Modifies an existing item
@@ -166,8 +168,13 @@ export class CascadinglookupsComponent implements OnInit {
           allowFiltering: true,
           allowSorting: true,
           dataField: eachObj["code"],
-          caption: eachObj["code"]
-         
+          caption: eachObj["code"],
+          validationRules: this.getMandatoryFieldsValidation(
+            eachObj["code"],
+            eachObj["IsMandatory"],
+            eachObj["IsCustomValidation"],
+            eachObj["validationCallback"]
+          )
         });
       }
       if (eachObj["AttributeType"] == "string") {
@@ -176,7 +183,13 @@ export class CascadinglookupsComponent implements OnInit {
           allowFiltering: true,
           allowSorting: true,
           dataField: eachObj["code"],
-          caption: eachObj["code"]
+          caption: eachObj["code"],
+          validationRules: this.getMandatoryFieldsValidation(
+            eachObj["code"],
+            eachObj["IsMandatory"],
+            eachObj["IsCustomValidation"],
+            eachObj["validationCallback"]
+          )
         });
       }
       if (eachObj["AttributeType"] == "date") {
@@ -186,7 +199,13 @@ export class CascadinglookupsComponent implements OnInit {
           allowSorting: true,
           dataField: eachObj["code"],
           caption: eachObj["code"],
-          dataType: "date"
+          dataType: "date",
+          validationRules: this.getMandatoryFieldsValidation(
+            eachObj["code"],
+            eachObj["IsMandatory"],
+            eachObj["IsCustomValidation"],
+            eachObj["validationCallback"]
+          )
         });
       }
 
@@ -198,12 +217,18 @@ export class CascadinglookupsComponent implements OnInit {
           width: 150,
           allowFiltering: true,
           allowSorting: true,
+          validationRules: this.getMandatoryFieldsValidation(
+            eachObj["code"],
+            eachObj["IsMandatory"],
+            eachObj["IsCustomValidation"],
+            eachObj["validationCallback"]
+          ),
           lookup: {
             dataSource:
               eachObj["MasterId"] == null
                 ? tempData
                 : function(options) {
-                  return {
+                    return {
                       store: JSON.parse(
                         localStorage.getItem(eachObj["PicklistMasterId"])
                       ),
@@ -211,7 +236,10 @@ export class CascadinglookupsComponent implements OnInit {
                         ? [
                             ComponentRef.GetMasterData(eachObj["MasterId"]),
                             "=",
-                            options.data.StateID
+                            eval(
+                              "options.data." +
+                                ComponentRef.GetMasterData(eachObj["MasterId"])
+                            )
                           ]
                         : null
                     };
@@ -222,6 +250,17 @@ export class CascadinglookupsComponent implements OnInit {
           dataField: eachObj["code"],
           caption: eachObj["code"]
         });
+
+        if (eachObj["ParentRelation"] != null) {
+          columns.forEach(element => {
+            if (element["dataField"] == eachObj["ParentRelation"]) {
+              element["setCellValue"] = function(rowData, value) {
+                eval("rowData." + eachObj["ParentRelation"] + "=" + value);
+                eval("rowData." + eachObj["code"] + "=" + null);
+              };
+            }
+          });
+        }
       }
     });
     return columns;
@@ -231,23 +270,44 @@ export class CascadinglookupsComponent implements OnInit {
     if (MasterId == 1) return "StateID";
   }
 
- 
-
   public getMandatoryFieldsValidation(
     Code,
     IsMandatory,
-    length,
     IsCustomValidation,
     validationCallback
   ): any {
     let validationRule = Array<object>();
-    if (IsMandatory == true) {
+    var componentobj  = this;
+    if (IsMandatory) {
       validationRule.push({
         type: "required",
         message: Code + " is required"
       });
     }
+    if (IsCustomValidation) {
+      validationRule.push({
+        type: "custom",
+        validationCallback: function(options) {
+          if (options.value.toString().length < 4) {
+            componentobj.AsyncValidation(options.value);
+            options.rule.message = Code + " Length Should be greater than 4";
+            return false;
+          } else {
+            return true;
+          }
+        }
+      });
+    }
 
     return validationRule;
   }
+
+AsyncValidation(value): Promise<ValidationErrors | null> | Observable<ValidationErrors | null > {
+  return CascadingFormService.AsyncvalidationService(value).map(
+    users => {
+      return (users && users.length > 0) ? {"mobNumExists": true} : null;
+    }
+  );
 }
+}
+
