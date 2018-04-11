@@ -1,0 +1,39 @@
+dx-data-grid {
+    display: block;
+    height: 440px;
+    width: 100%;
+}
+
+.img-container {
+    height: 100px;
+}
+
+
+img {
+    height: 100px;
+}
+
+.dx-loadpanel-message{
+    width: 82%;
+    float: right;
+    padding-top: 5px;
+    text-align: left;
+    padding-left: 15px;
+}  
+
+.dx-loadindicator-wrapper{
+    height: 106%;
+}
+.dx-loadpanel-content-wrapper{
+    float: left;
+    margin-top: -55px
+}
+.dx-overlay-content .dx-resizable .dx-loadpanel-content{
+    width: 200px;
+}
+.dx-loadindicator-content{
+    height: 104%;
+}
+
+
+

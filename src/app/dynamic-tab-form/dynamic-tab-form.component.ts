@@ -1,20 +1,24 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,ViewEncapsulation } from "@angular/core";
 import { DynamicTabService } from "./DynamicTabService";
 import { Http } from "@angular/http";
 import CustomStore from "devextreme/data/custom_store";
 import DataSource from "devextreme/data/data_source";
 
+
 @Component({
   selector: "app-dynamic-tab-form",
   templateUrl: "./dynamic-tab-form.component.html",
-  styleUrls: ["./dynamic-tab-form.component.css"]
+  styleUrls: ["./dynamic-tab-form.component.css"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DynamicTabFormComponent implements OnInit {
   FirstgroupCount: number = 0;
   SecondGroupCount: number = 0;
   formData: any;
   items: any[];
-  IsDataGridCreated:boolean =false;
+  loadingVisible: boolean = true;
+  IsDataGridCreated: boolean = false;
+ 
   constructor(private http: Http) { }
 
   ngOnInit() {
@@ -100,7 +104,7 @@ export class DynamicTabFormComponent implements OnInit {
         });
       }
       if (this.FirstgroupCount == 1 && element["cssClass"] == "first-group" && element["ControlType"] == "DataGrid" && !this.IsDataGridCreated) {
-        this.IsDataGridCreated=true;
+        this.IsDataGridCreated = true;
         Inneritems[0].items[0].tabs[0].items.push({
           dataField: element["code"],
           editorType: this.getEditorType(element["ControlType"]),
@@ -314,5 +318,20 @@ export class DynamicTabFormComponent implements OnInit {
       paginate: true,
       pageSize: 10
     });
+  }
+
+  public onShown() {
+
+    setTimeout(() => {
+      this.showLoadPanel(false);
+    }, 5000);
+  }
+
+  public onHidden() {
+
+  }
+  public showLoadPanel(value) {
+
+    this.loadingVisible = value;
   }
 }

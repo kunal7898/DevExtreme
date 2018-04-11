@@ -1,3 +1,20 @@
 <dx-form id="formdata" [(formData)]="formData" 
 [(items)]="items"
 ></dx-form>
+
+<dx-load-panel 
+#loadPanel
+shadingColor="rgba(0,0,0,0.4)"
+[(visible)]="loadingVisible"
+[showIndicator]="true"
+[showPane]="true"
+[shading]="true"
+[closeOnOutsideClick]="false"
+(onShown)="onShown()"
+(onHidden)="onHidden()">
+<div *dxTemplate="let item of 'content'" style="float: left">
+        <label style="margin-top:33px; margin-left: -71px;">
+            {{Message}}
+        </label>
+</div>
+</dx-load-panel>
