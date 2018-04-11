@@ -32,12 +32,12 @@ export class DynamicTabService<T> {
         length: null,
         IsCustomValidation: false,
         validationCallback: null,
-        ControlType: null
+        ControlType: "Tab"
       },
       {
         code: "CustomerAddress",
         Name: "Customer Address",
-        AttributeType: "TextArea",
+        AttributeType: "textarea",
         PicklistId: null,
         IsMandatory: true,
         cssClass: "first-group",
@@ -45,7 +45,7 @@ export class DynamicTabService<T> {
         length: null,
         IsCustomValidation: false,
         validationCallback: null,
-        ControlType: null
+        ControlType: "Tab"
       },
       {
         code: "SaleAmount",
@@ -64,6 +64,7 @@ export class DynamicTabService<T> {
         code: "StoreCity",
         Name: "Store City",
         AttributeType: "Lookup",
+        cssClass: "first-group",
         IscellTemplate: false,
         PicklistMasterId: 5,
         colCount: null,
@@ -76,6 +77,7 @@ export class DynamicTabService<T> {
         code: "StoreState",
         Name: "Store State",
         AttributeType: "string",
+        cssClass: "first-group",
         IscellTemplate: false,
         PicklistMasterId: null,
         colCount: null,
@@ -89,6 +91,7 @@ export class DynamicTabService<T> {
         Name: "Order Date",
         AttributeType: "date",
         IscellTemplate: false,
+        cssClass: "first-group",
         PicklistMasterId: null,
         colCount: null,
         length: null,
@@ -100,6 +103,7 @@ export class DynamicTabService<T> {
         code: "Employee",
         Name: "Sale Amount",
         AttributeType: "string",
+        cssClass: "first-group",
         PicklistMasterId: null,
         IscellTemplate: false,
         colCount: null,
@@ -113,6 +117,7 @@ export class DynamicTabService<T> {
         Name: "Sale Amount",
         AttributeType: "string",
         PicklistMasterId: null,
+        cssClass: "first-group",
         IscellTemplate: false,
         colCount: null,
         length: null,
@@ -124,4 +129,6 @@ export class DynamicTabService<T> {
 
     return LayoutAttribute;
   }
+
+  
 }

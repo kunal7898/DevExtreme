@@ -14,13 +14,14 @@ export class DynamicTabFormComponent implements OnInit {
   SecondGroupCount: number = 0;
   formData: any;
   items: any[];
-  constructor(private http: Http) {}
+  IsDataGridCreated:boolean =false;
+  constructor(private http: Http) { }
 
   ngOnInit() {
     this.formData = [{}];
     let LoadCss = this.LoadLayoutHeaderItems();
-    let LoadControlType = this.LoadInnerItems(LoadCss);
-    this.LoadInnerItems(LoadControlType);
+    let LoadControlType = this.LoadLayoutInner(LoadCss);
+    this.items = this.LoadInnerItems(LoadControlType);
   }
 
   private LoadLayoutHeaderItems(): Array<object> {
@@ -54,7 +55,7 @@ export class DynamicTabFormComponent implements OnInit {
     let InnerLayoutResolver = new DynamicTabService();
 
     InnerLayoutResolver.LoadFormLayout(null).forEach(element => {
-      if (element["ControlType"] == "Tab") {
+      if (element["ControlType"] == "Tab" && !element["IsInTab"]) {
         var component = this;
         LayoutHeaderItems[0].items.push({
           itemType: "tabbed",
@@ -80,12 +81,31 @@ export class DynamicTabFormComponent implements OnInit {
     let viewresolver = new DynamicTabService();
 
     viewresolver.LaodFormAttribute(null).forEach(element => {
-      if (this.SecondGroupCount == 1 && element["cssClass"] == "second-group") {
-        Inneritems[0].items.push({
+      if (this.FirstgroupCount == 1 && element["cssClass"] == "first-group" && element["ControlType"] == "Tab") {
+        Inneritems[0].items[0].tabs[0].items.push({
           dataField: element["code"],
           editorType: this.getEditorType(element["AttributeType"]),
           editorOptions: this.getEditorOptions(
             this.getEditorType(element["AttributeType"]),
+            element["PicklistId"],
+            element["code"]
+          ),
+          validationRules: this.getMandatoryFieldsValidation(
+            element["code"],
+            element["IsMandatory"],
+            element["length"],
+            element["IsCustomValidation"],
+            element["validationCallback"]
+          )
+        });
+      }
+      if (this.FirstgroupCount == 1 && element["cssClass"] == "first-group" && element["ControlType"] == "DataGrid" && !this.IsDataGridCreated) {
+        this.IsDataGridCreated=true;
+        Inneritems[0].items[0].tabs[0].items.push({
+          dataField: element["code"],
+          editorType: this.getEditorType(element["ControlType"]),
+          editorOptions: this.getEditorOptions(
+            this.getEditorType(element["ControlType"]),
             element["PicklistId"],
             element["code"]
           ),
@@ -197,7 +217,7 @@ export class DynamicTabFormComponent implements OnInit {
       var componentRef = this;
       return {
         text: "Save Data",
-        onClick: function(e) {
+        onClick: function (e) {
           // componentRef.SaveFormData(e);
         }
       };
@@ -222,24 +242,24 @@ export class DynamicTabFormComponent implements OnInit {
           allowDeleting: true,
           allowAdding: true
         },
-        onContentReady: function(e) {
+        onContentReady: function (e) {
           var get = e;
         },
-        onEditorPreparing: function(options) {
+        onEditorPreparing: function (options) {
           var CurrentOptions = options;
-          options.editorOptions.onValueChanged = function(e) {
+          options.editorOptions.onValueChanged = function (e) {
             CurrentOptions.setValue(e.value);
             if (
               CurrentOptions.row.rowIndex >
-                CurrentOptions.component.getController("data")._items.length -
-                  2 &&
+              CurrentOptions.component.getController("data")._items.length -
+              2 &&
               CurrentOptions.index == CurrentOptions.component.columnCount() - 1
             ) {
               CurrentOptions.component.addRow(CurrentOptions.row.key);
             }
           };
         },
-        onToolbarPreparing: function(e) {
+        onToolbarPreparing: function (e) {
           var toolbarItems = e.toolbarOptions.items;
           // Modifies an existing item
           toolbarItems.forEach((element, index) => {
@@ -269,7 +289,7 @@ export class DynamicTabFormComponent implements OnInit {
     var http = this.http;
     return new DataSource({
       store: new CustomStore({
-        load: function(loadOptions: any) {
+        load: function (loadOptions: any) {
           var params = "?";
 
           params += "skip=" + loadOptions.skip || 0;
@@ -277,8 +297,8 @@ export class DynamicTabFormComponent implements OnInit {
 
           return http
             .get(
-              "https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems" +
-                params
+            "https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems" +
+            params
             )
             .toPromise()
             .then(response => {
