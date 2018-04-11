@@ -30,6 +30,7 @@ export class CustomDropDownComponent implements OnInit, AfterViewInit {
   gridDataSource: any;
 
     constructor(private http: Http) {
+      
   }
 
   ngOnInit() {

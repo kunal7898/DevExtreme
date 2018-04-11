@@ -32,7 +32,10 @@ import { CustomDataSourceFormComponent } from './custom-data-source-form/custom-
 import { CustomTabbedFormComponent } from './custom-tabbed-form/custom-tabbed-form.component';
 import { DataSourceService } from './data-source.service';
 import { CascadinglookupsComponent } from './cascadinglookups/cascadinglookups.component';
-
+import { ExampleComponent } from './example/example.component';
+import { FormatDirective } from './format.directive';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { DynamicTabFormComponent } from './dynamic-tab-form/dynamic-tab-form.component';
 
 
 
@@ -61,11 +64,16 @@ import { CascadinglookupsComponent } from './cascadinglookups/cascadinglookups.c
     CustomDataSourceFormComponent,
     CustomTabbedFormComponent,
     CascadinglookupsComponent,
+    ExampleComponent,
+    FormatDirective,
+    DynamicTabFormComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
     DevExtremeModule,
      RouterModule.forRoot([
       { path:'DataGrid', component : DataGridComponent},
@@ -83,7 +91,8 @@ import { CascadinglookupsComponent } from './cascadinglookups/cascadinglookups.c
       {path:'CustomdatasourceForm',component:CustomDataSourceFormComponent},
       {path:'CustomDropDown',component:CustomDropDownComponent},
       {path:'CascadingLookups',component:CascadinglookupsComponent},
-
+      {path:'Example',component:ExampleComponent},
+      {path:'DynamicForm',component:DynamicTabFormComponent},
       {path:'CustomerForm',component:CustomerComponent,
       children: [
         {

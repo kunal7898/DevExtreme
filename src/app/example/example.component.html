@@ -1,0 +1,23 @@
+
+<button type="button" class="btn" (click)="AddCourses()">Add</button>
+<ul class="list-group" *ngFor="let course of Courses; trackBy:trackByCourse">
+  <li class="list-group-item">{{course.Name}}</li>
+ 
+</ul>
+
+<input type="text" appFormat [format]="'upper'">
+
+<form class="form-inline" >
+  <div class="form-group">
+    <label for="Email">Email address:</label>
+    <input ngModel name="Email" #Email="ngModel"  type="email" class="form-control" (change)="OnChange(Email)" id="email">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd">
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

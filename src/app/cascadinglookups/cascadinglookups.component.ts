@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { CascadingFormService } from "./CascadingFormService";
-import { ValidationErrors } from "@angular/forms";
+import { ValidationErrors, AbstractControl } from "@angular/forms";
 import { Observable } from "rxjs/Observable";
+import * as $ from "jquery";
 
 @Component({
   selector: "app-cascadinglookups",
@@ -277,7 +278,7 @@ export class CascadinglookupsComponent implements OnInit {
     validationCallback
   ): any {
     let validationRule = Array<object>();
-    var componentobj  = this;
+    var componentobj = this;
     if (IsMandatory) {
       validationRule.push({
         type: "required",
@@ -287,27 +288,35 @@ export class CascadinglookupsComponent implements OnInit {
     if (IsCustomValidation) {
       validationRule.push({
         type: "custom",
-        validationCallback: function(options) {
-          if (options.value.toString().length < 4) {
-            componentobj.AsyncValidation(options.value);
-            options.rule.message = Code + " Length Should be greater than 4";
-            return false;
-          } else {
-            return true;
-          }
-        }
+        validationCallback: componentobj.validateEmailNotTaken
       });
     }
 
     return validationRule;
   }
 
-AsyncValidation(value): Promise<ValidationErrors | null> | Observable<ValidationErrors | null > {
-  return CascadingFormService.AsyncvalidationService(value).map(
-    users => {
-      return (users && users.length > 0) ? {"mobNumExists": true} : null;
-    }
-  );
-}
-}
+  validateEmailNotTaken(params) {
+    $.ajax({
+      url: "http://www.example.com/services/validate-login",
+      method: "POST",
+      data: {
+        login: params.value
+      },
+      success: function(result) {
+        params.rule.isValid = result.Result;
+        params.rule.message = result.Message;
+        params.validator.validate();
+      }
+    });
+    // Validation result until the response is recieved
+    return false;
+  }
 
+  // AsyncValidation(value): Promise<ValidationErrors | null> | Observable<ValidationErrors | null > {
+  //   return CascadingFormService.AsyncvalidationService(value).map(
+  //     response => {
+  //       return (response );
+  //     }
+  //   );
+  // }
+}

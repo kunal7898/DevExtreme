@@ -13,6 +13,7 @@ import DataSource from "devextreme/data/data_source";
 export class CustomDataSourceFormComponent implements OnInit {
   FirstgroupCount: number = 0;
   SecondGroupCount: number = 0;
+  selectedValues: any = [];
   formData: any;
   items: any[];
   tabs: any[];
@@ -171,6 +172,8 @@ export class CustomDataSourceFormComponent implements OnInit {
     if (Attributetype == "DataGrid") return "dxDataGrid";
     if (Attributetype == "SaveButton") return "dxButton";
     if (Attributetype == "Tab") return "dxTabs";
+    if (Attributetype == "LookUp") return "dxLookup";
+    if (Attributetype == "TagBox") return "dxTagBox";
     else return null;
   }
 
@@ -259,6 +262,26 @@ export class CustomDataSourceFormComponent implements OnInit {
         remoteOperations: {
           paging: true
         }
+      };
+    }
+    if (Type == "dxLookup") {
+      var componentRef = this;
+      return {
+        dataSource: componentRef.GetCustomDataSource(),
+        closeOnOutsideClick: true,
+        showPopupTitle: false,
+        displayExpr: "OrderNumber",
+        searchEnabled: true,
+        searchMode: "contains",
+        searchPlaceholder: "Search"
+      };
+    }
+    if (Type == "dxTagBox") {
+      var componentRef = this;
+      return {
+        dataSource: componentRef.GetCustomDataSource(),
+        displayExpr: "StoreState",
+        valueExpr: "OrderNumber"
       };
     } else return null;
   }
