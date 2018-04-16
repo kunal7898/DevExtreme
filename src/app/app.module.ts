@@ -36,6 +36,7 @@ import { ExampleComponent } from './example/example.component';
 import { FormatDirective } from './format.directive';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { DynamicTabFormComponent } from './dynamic-tab-form/dynamic-tab-form.component';
+import { JquerySlideOutComponent } from './jquery-slide-out/jquery-slide-out.component';
 
 
 
@@ -67,6 +68,7 @@ import { DynamicTabFormComponent } from './dynamic-tab-form/dynamic-tab-form.com
     ExampleComponent,
     FormatDirective,
     DynamicTabFormComponent,
+    JquerySlideOutComponent,
 
   ],
   imports: [
@@ -92,6 +94,7 @@ import { DynamicTabFormComponent } from './dynamic-tab-form/dynamic-tab-form.com
       {path:'CustomDropDown',component:CustomDropDownComponent},
       {path:'CascadingLookups',component:CascadinglookupsComponent},
       {path:'Example',component:ExampleComponent},
+      {path:'JquerySlideOut',component:JquerySlideOutComponent},
       {path:'DynamicForm',component:DynamicTabFormComponent},
       {path:'CustomerForm',component:CustomerComponent,
       children: [
