@@ -1,30 +1,35 @@
+import { FormDataHelper } from "../FormLayoutService/FormDataHelper";
+import { Http } from "@angular/http";
+
 export class DynamicTabService<T> {
   constructor() {}
-  public LoadFormLayout(LayoutRequest: T[]): Array<object> {
+  public LoadFormLayout(LayoutRequest: T[]): Array<any> {
     let LayoutFormResponse = new Array<object>();
     LayoutFormResponse.push(
       {
         ControlType: "Tab",
-        TabTitle: "Customer Details",
-        IsInTab: false
+        Title: "Customer Details",
+        IsInTab: false,
+        itemType:"tabbed"
       },
       {
         ControlType: "DataGrid",
-        TabTitle: "Customer Details",
-        IsInTab: true
+        Title: "Customer Details",
+        IsInTab: true,
+        itemType:"tabbed"
       }
     );
 
     return LayoutFormResponse;
   }
 
-  public LaodFormAttribute(AttributeRequest: T[]): Array<object> {
+  public LaodFormAttribute(AttributeRequest: T[]): Array<any> {
     let LayoutAttribute = new Array<object>();
     LayoutAttribute.push(
       {
         code: "CustomerName",
         Name: "Customer Name",
-        AttributeType: "TextEdit",
+        AttributeType: "textarea",
         PicklistId: null,
         IsMandatory: true,
         cssClass: "first-group",
@@ -129,6 +134,27 @@ export class DynamicTabService<T> {
 
     return LayoutAttribute;
   }
+}
 
-  
+export class DynamicFormLoader {
+  DynamicTabService: DynamicTabService<any>;
+  constructor(private http:Http) {
+    this.DynamicTabService = new DynamicTabService();
+  }
+
+  public LoadInternalForm():Array<object> {
+    let _FormDataHelper = new FormDataHelper(this.http);
+    let _HeaderFormLayout = _FormDataHelper.PrepareHeaderFormLayout(
+      this.DynamicTabService.LaodFormAttribute(null)
+    );
+    let _InnerFormLayout = _FormDataHelper.PrepareInnerFormLayout(
+      this.DynamicTabService.LoadFormLayout(null),
+      _HeaderFormLayout
+    );
+
+    return _FormDataHelper.PrepareFormAttribute(
+      this.DynamicTabService.LaodFormAttribute(null),
+      _InnerFormLayout
+    );
+  }
 }

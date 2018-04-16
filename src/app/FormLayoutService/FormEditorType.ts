@@ -1,5 +1,11 @@
 import { Input } from "@angular/core";
 import { FormDataGridHelper } from "./FormDataGridHelper";
+import { DynamicTabService } from "../dynamic-tab-form/DynamicTabService";
+import { Http } from "@angular/http";
+import CustomStore from "devextreme/data/custom_store";
+import DataSource from "devextreme/data/data_source";
+
+
 export namespace FormEditors {
   export class FormEditorType {
     public Attributetype: string;
@@ -27,10 +33,16 @@ export namespace FormEditors {
       else return null;
     }
   }
+
+
+
   export class FormEditorOptions {
     public _Type: string;
     public _PicklistId: number;
     public _Code: string;
+    FormDataGridHelper:FormDataGridHelper;
+    
+    
     @Input()
     set EditorType(Type: string) {
       // you might do something special in here
@@ -62,11 +74,15 @@ export namespace FormEditors {
       return this._Code;
     }
 
-    public constructor(Type: string, PicklistId: string, Code: string) {}
+    public constructor(Type: string, PicklistId: number, Code: string,private http? :Http) {
+        this._Type = Type;
+        this._PicklistId = PicklistId;
+        this._Code = Code;
+        this.FormDataGridHelper = new FormDataGridHelper(http);
+       }
 
-    
-  private getEditorOptions(Type, PicklistId, Code): any {
-    if (Type == "dxButton") {
+  public getEditorOptions(): any {
+    if (this._Type == "dxButton") {
       var componentRef = this;
       return {
         text: "Save Data",
@@ -75,11 +91,12 @@ export namespace FormEditors {
         }
       };
     }
-    if (Type == "dxDataGrid") {
+    if (this._Type== "dxDataGrid") {
       var componentvalue = this;
+        
       return {
-        dataSource: componentvalue.GetCustomDataSource(),
-        columns: componentvalue.getGridColumns(),
+        dataSource: componentvalue.FormDataGridHelper.GetCustomDataSource(),
+        columns: componentvalue.FormDataGridHelper.getGridColumns(),
         cacheEnabled: true,
         showRowLines: true,
         showBorders: true,
@@ -138,13 +155,7 @@ export namespace FormEditors {
     } else return null;
   }
 
-  private GetCustomDataSource(){
-   let _formDataGridHelper = new FormDataGridHelper(null);
 
-  }
-
-  private getGridColumns(){
-
-  }
+ 
   }
 }

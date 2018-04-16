@@ -1,6 +1,9 @@
 import { FormLayout } from "./FormLayoutHelper";
 import { FormEditors } from "./FormEditorType";
-
+import { FormDataGridHelper } from "./FormDataGridHelper";
+import { Http } from "@angular/http";
+import CustomStore from "devextreme/data/custom_store";
+import DataSource from "devextreme/data/data_source";
 export class FormDataHelper {
   // region  Declaration
 
@@ -8,11 +11,15 @@ export class FormDataHelper {
   SecondGroupCount: number = 0;
   IsDataGridCreated: boolean = false;
   FormEditorref: FormEditors.FormEditorType;
+  FormDataGridHelper: FormDataGridHelper;
   // endregion
 
   // region  Constructor
 
-  public constructor(FormData: Array<FormLayout.FormLayoutHelper>) {
+  public constructor(
+    private http: Http,
+    FormData?: Array<FormLayout.FormLayoutHelper>
+  ) {
     this.FormEditorref = new FormEditors.FormEditorType();
   }
 
@@ -20,17 +27,17 @@ export class FormDataHelper {
 
   // region  Private Section
 
-  private PrepareHeaderFormLayout(
+  public PrepareHeaderFormLayout(
     rParams: Array<FormLayout.FormLayoutHelper>
-  ): Array<object> {
+  ): Array<any> {
     let LayoutBuilder = new Array<object>();
     rParams.forEach(element => {
       if (element["cssClass"] == "first-group" && this.FirstgroupCount == 0) {
         LayoutBuilder.push({
           cssClass: element["cssClass"],
           colCount: element["colCount"],
-          itemType: element["colCount"],
-          items: element["items"]
+          itemType: "group",
+          items: []
         });
         this.FirstgroupCount++;
       }
@@ -38,8 +45,8 @@ export class FormDataHelper {
         LayoutBuilder.push({
           cssClass: element["cssClass"],
           colCount: element["colCount"],
-          itemType: element["colCount"],
-          items: element["items"]
+          itemType: "group",
+          items: []
         });
         this.SecondGroupCount++;
       }
@@ -48,11 +55,10 @@ export class FormDataHelper {
     return LayoutBuilder;
   }
 
-  private PrepareInnerFormLayout(
+  public PrepareInnerFormLayout(
     rParams: Array<FormLayout.FormInnerLayoutHelper>,
     LayoutHeaderItems: Array<any>
   ): Array<object> {
-    let InnerLayoutBuilder = new Array<object>();
     rParams.forEach(element => {
       if (element["ControlType"] == "Tab" && !element["IsInTab"]) {
         LayoutHeaderItems[0].items.push({
@@ -69,10 +75,10 @@ export class FormDataHelper {
         });
       }
     });
-    return InnerLayoutBuilder;
+    return LayoutHeaderItems;
   }
 
-  private PrepareFormAttribute(
+  public PrepareFormAttribute(
     rParams: Array<FormLayout.FormLayoutAttribute>,
     Inneritems: Array<any>
   ): Array<object> {
@@ -84,8 +90,7 @@ export class FormDataHelper {
       ) {
         Inneritems[0].items[0].tabs[0].items.push({
           dataField: element["code"],
-          editorType: (this.FormEditorref.FormAttributeType =
-            element["AttributeType"]),
+          editorType: this.getEditorType(element["AttributeType"]),
           editorOptions: this.getEditorOptions(
             this.getEditorType(element["AttributeType"]),
             element["PicklistId"],
@@ -109,7 +114,7 @@ export class FormDataHelper {
         this.IsDataGridCreated = true;
         Inneritems[0].items[0].tabs[0].items.push({
           dataField: element["code"],
-          editorType: this.getEditorType(element["AttributeType"]),
+          editorType: this.getEditorType(element["ControlType"]),
           editorOptions: this.getEditorOptions(
             this.getEditorType(element["ControlType"]),
             element["PicklistId"],
@@ -134,77 +139,45 @@ export class FormDataHelper {
     return this.FormEditorref.FormAttributeType;
   }
 
-  private getEditorOptions(Type, PicklistId, Code): any {
-    if (Type == "dxButton") {
-      var componentRef = this;
-      return {
-        text: "Save Data",
-        onClick: function(e) {
-          // componentRef.SaveFormData(e);
-        }
-      };
-    }
-    if (Type == "dxDataGrid") {
-      var componentvalue = this;
-      return {
-       // dataSource: componentvalue.GetCustomDataSource(),
-        //columns: componentvalue.getGridColumns(),
-        cacheEnabled: true,
-        showRowLines: true,
-        showBorders: true,
-        height: "500",
-        width: "100%",
-        sorting: {
-          mode: "multiple"
-        },
-        twoWayBindingEnabled: true,
-        editing: {
-          mode: "batch",
-          allowUpdating: true,
-          allowDeleting: true,
-          allowAdding: true
-        },
-        onContentReady: function(e) {
-          var get = e;
-        },
-        onEditorPreparing: function(options) {
-          var CurrentOptions = options;
-          options.editorOptions.onValueChanged = function(e) {
-            CurrentOptions.setValue(e.value);
-            if (
-              CurrentOptions.row.rowIndex >
-                CurrentOptions.component.getController("data")._items.length -
-                  2 &&
-              CurrentOptions.index == CurrentOptions.component.columnCount() - 1
-            ) {
-              CurrentOptions.component.addRow(CurrentOptions.row.key);
-            }
-          };
-        },
-        onToolbarPreparing: function(e) {
-          var toolbarItems = e.toolbarOptions.items;
-          // Modifies an existing item
-          toolbarItems.forEach((element, index) => {
-            if (element.name == "addRowButton") {
-              element.options.type = "success";
-              element.options.icon = null;
-              element.showText = "always";
-            } else {
-              element.visible = false;
-            }
-          });
-        },
+  private GetCustomDataSource() {
+    var http = this.http;
+    return new DataSource({
+      store: new CustomStore({
+        load: function(loadOptions: any) {
+          var params = "?";
 
-        allowColumnReordering: true,
-        allowColumnResizeing: true,
-        filterRow: {
-          visible: true
-        },
-        remoteOperations: {
-          paging: true
+          params += "skip=" + loadOptions.skip || 0;
+          params += "&take=" + loadOptions.take || 10;
+
+          return http
+            .get(
+              "https://js.devexpress.com/Demos/WidgetsGallery/data/orderItems" +
+                params
+            )
+            .toPromise()
+            .then(response => {
+              var json = response.json();
+              console.log(json.items);
+              return {
+                totalCount: json.totalCount,
+                data: json.items
+              };
+            });
         }
-      };
-    } else return null;
+      }),
+      paginate: true,
+      pageSize: 10
+    });
+  }
+
+  private getEditorOptions(Type, PicklistId, Code): any {
+    let _formEditoOptions = new FormEditors.FormEditorOptions(
+      Type,
+      PicklistId,
+      Code,
+      this.http
+    );
+    return _formEditoOptions.getEditorOptions();
   }
 
   private getMandatoryFieldsValidation(
