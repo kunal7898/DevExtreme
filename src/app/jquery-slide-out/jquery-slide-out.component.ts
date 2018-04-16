@@ -66,7 +66,8 @@ export class JquerySlideOutComponent implements OnInit {
                   .appendTo(itemElement)
                   .dxToolbar({
                     dataSource:[
-                      
+                      {location:"before",widget: "dxButton"},
+                      {}
                     ]
                   });
       
